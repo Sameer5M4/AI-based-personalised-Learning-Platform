@@ -1,82 +1,109 @@
-import React, { useState } from "react";
-import { motion } from "framer-motion";
-import { FaMapMarkerAlt } from "react-icons/fa";
+import React, { useState, useEffect } from 'react';
+import LeftSidebar from '../components/dashboard/LeftSidebar';
+import Loader from '../components/Loader';
+import Home from './Home';
+import CareerPath from './CareerPath';
+import Settings from './Settings';
+import Courses from './Courses';
+import Analytics from './Analytics';
+import Assignments from './Assignments';
+import Help from './Help';
+import AlertBox from '../components/AlertBox';
+import CourseDetails from './CourseDetails';
+import Profile from './Profile';
+import GenerateQuiz from './GenerateQuiz';
 
-const ProgressBar = ({ progress }) => {
-  return (
-    <div className="relative w-full bg-gray-300 rounded-full h-6 overflow-hidden">
-      <motion.div 
-        initial={{ width: 0 }} 
-        animate={{ width: `${progress}%` }} 
-        transition={{ duration: 1 }}
-        className="h-full bg-gradient-to-r from-green-400 to-blue-500 text-white flex items-center justify-center text-sm font-semibold">
-        {progress}%
-      </motion.div>
-    </div>
+export default function Dashboard({ userId, handleLogout, courses, coursename, isCourse, setIsCourse }) {
+  const [active, setActive] = useState(isCourse ? 'Courses' : 'Home');
+  const [darkMode, setDarkMode] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [open, setOpen] = useState(false)
+  const [currentPage, setCurrentPage] = useState(isCourse ? 'Course-detail' : 'Home');
+
+
+  useEffect(() => {
+    setTimeout(() => setLoading(false), 1500);
+  }, [currentPage]);
+
+  useEffect(() => {
+    if (darkMode) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [darkMode]);
+
+  return ( 
+    <>
+      {loading && <Loader />}
+      {open && <AlertBox open={open} setOpen={setOpen} handleLogout={handleLogout}/>}
+      <div className={`flex bg-gray-200/25 transition-transform transition-all duration-300 ${loading ? 'blur-md' : ''}`}>
+        <div
+          aria-hidden="true"
+          className="fixed inset-x-0 -top-60 -z-10 transform-gpu overflow-hidden blur-2xl sm:-top-[500px] "
+        >
+          <div
+            style={{
+              clipPath:
+                'polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)',
+            }}
+            className="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-20 sm:left-[calc(40%-30rem)] sm:w-[72.1875rem]"
+          />
+        </div>
+
+        <div
+          aria-hidden="true"
+          className="fixed inset-x-0 top-60 -z-10 transform-gpu overflow-hidden blur-2xl sm:-top-[500px] "
+        >
+          <div
+            style={{
+              clipPath:
+                'polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)',
+            }}
+            className="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#32CD32] to-[#7DF9FF] opacity-20 sm:left-[calc(40%-30rem)] sm:w-[72.1875rem]"
+          />
+        </div>
+        <div className="fixed p-3">
+          <LeftSidebar userId={userId} active={active} setActive={setActive} currentPage={currentPage} setCurrentPage={setCurrentPage} open={open} setOpen={setOpen} isCourse={isCourse} setIsCourse={setIsCourse}/>
+        </div>
+        <div className="w-full">
+          {currentPage === 'Home' && <Home userId={userId} darkMode={darkMode} setDarkMode={setDarkMode} setCurrentPage={setCurrentPage} setActive={setActive} />}
+          {currentPage === 'Add-Path' && <CareerPath />}
+          {currentPage === 'Courses' && <Courses setCurrentPage={setCurrentPage} courses={courses} />}
+          {currentPage === 'Course-detail' && <CourseDetails coursename={coursename} />}
+          {currentPage === 'Certifications' && <Assignments />}
+          {/* {currentPage === 'Settings' && <GenerateQuiz />} */}
+          {currentPage === 'Settings' && <Settings />}
+          {currentPage === 'Help' && <Help />}
+          {currentPage === 'Profile' && <Profile userId={userId} />}
+
+        </div>
+
+        <div
+          aria-hidden="true"
+          className="fixed inset-x-0 top-[calc(50%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(140%-30rem)] "
+        >
+          <div
+            style={{
+              clipPath:
+                'polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)',
+            }}
+            className="relative left-[calc(50%-3rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2  rotate-[180deg] bg-gradient-to-tr from-[#00FFFF] to-[#FF69B4] opacity-30 sm:left-[calc(50%-36rem)] sm:w-[72.1875rem]"
+          />
+        </div>
+        <div
+          aria-hidden="true"
+          className="fixed inset-x-0 top-[calc(150%-20rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)] "
+        >
+          <div
+            style={{
+              clipPath:
+                'polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)',
+            }}
+            className="relative left-[calc(50%+3rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%+36rem)] sm:w-[72.1875rem]"
+          />
+        </div>
+      </div>
+    </>
   );
-};
-
-const Dashboard = () => {
-  const [darkMode, setDarkMode] = useState(() => window.matchMedia("(prefers-color-scheme: dark)").matches);
-  const [completedCheckpoints, setCompletedCheckpoints] = useState([true, true, false, false, false, false, false, false]);
-
-  const toggleDarkMode = () => setDarkMode(!darkMode);
-
-  return (
-    <div className={darkMode ? "bg-gray-900 text-white" : "bg-blue-50 text-gray-900"}>
-      {/* Header */}
-      <header className="flex justify-between items-center px-10 py-5 shadow-lg bg-gradient-to-r from-purple-600 to-blue-500 text-white">
-        <h1 className="text-2xl font-bold">AI Learning Dashboard</h1>
-        <button 
-          onClick={toggleDarkMode} 
-          className="px-4 py-2 bg-gray-800 text-white rounded-lg shadow-md hover:bg-gray-700">
-          {darkMode ? "Light Mode" : "Dark Mode"}
-        </button>
-      </header>
-
-      {/* Profile & Settings */}
-      <section className="px-10 py-8 grid md:grid-cols-2 gap-6">
-        <div className="bg-white p-6 rounded-lg shadow-md dark:bg-gray-800">
-          <h2 className="text-xl font-semibold text-blue-600 dark:text-cyan-300">User Profile</h2>
-          <p className="text-gray-700 dark:text-gray-300 mt-2">John Doe</p>
-          <button className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">Edit Profile</button>
-        </div>
-        <div className="bg-white p-6 rounded-lg shadow-md dark:bg-gray-800">
-          <h2 className="text-xl font-semibold text-blue-600 dark:text-cyan-300">Settings</h2>
-          <button className="mt-4 px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600">Account Settings</button>
-        </div>
-      </section>
-
-      {/* Career Paths & Progress Tracking */}
-      <section className="px-10 py-8">
-        <h2 className="text-2xl font-bold text-blue-600 dark:text-cyan-300">Your Learning Progress</h2>
-        <div className="mt-4 bg-white p-6 rounded-lg shadow-md dark:bg-gray-800">
-          <h3 className="text-xl font-semibold text-blue-500 dark:text-cyan-300">Web Development Course</h3>
-          <p className="text-gray-600 dark:text-gray-400">A comprehensive course covering HTML, CSS, JavaScript, React, and backend development.</p>
-          <ProgressBar progress={50} />
-        </div>
-      </section>
-
-      {/* Course Roadmap */}
-      <section className="px-10 py-8">
-        <h2 className="text-2xl font-bold text-blue-600 dark:text-cyan-300">Course Roadmap</h2>
-        <div className="relative flex justify-center items-center mt-8">
-          <div className="relative w-full h-40 flex items-center">
-            {[...Array(8)].map((_, index) => (
-              <motion.div 
-                key={index} 
-                whileHover={{ scale: 1.2 }} 
-                onClick={() => alert(`Checkpoint ${index + 1}: ${completedCheckpoints[index] ? 'Completed' : 'Not Completed'}`)}
-                className={`absolute bg-${completedCheckpoints[index] ? 'green' : 'red'}-500 text-white rounded-full p-2 shadow-lg cursor-pointer`} 
-                style={{ left: `${index * 12}%`, top: index % 2 === 0 ? "10px" : "50px" }}>
-                <FaMapMarkerAlt size={20} />
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-    </div>
-  );
-};
-
-export default Dashboard;
+}

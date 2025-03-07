@@ -19,7 +19,7 @@ export default function AuthContainer({ setIsAuthentic, handleLogin, setUserId }
 
   const handleSubmitSignup = async () => {
     try {
-      const res = await axios.post("http://localhost:9000/api/auth/register", formData);
+      const res = await axios.post("http://localhost:5000/api/auth/register", formData);
 
       // Store token and userId
       localStorage.setItem("token", res.data.token);
@@ -29,7 +29,7 @@ export default function AuthContainer({ setIsAuthentic, handleLogin, setUserId }
       setIsAuthentic(true);
       handleLogin(res.data.token, res.data.userId);
       setUserId(res.data.userId);
-      navigate("/");
+      navigate("/dashboard");
 
     } catch (error) {
       alert(error.response?.data?.msg || "Registration failed!");
@@ -48,7 +48,7 @@ export default function AuthContainer({ setIsAuthentic, handleLogin, setUserId }
         alert('Please fill the required fields!');
         return;
       }
-      const res = await axios.post("http://localhost:9000/api/auth/login", loginData);
+      const res = await axios.post("http://localhost:5000/api/auth/login", loginData);
 
       // Store token and user ID
       localStorage.setItem("token", res.data.token);
@@ -58,7 +58,7 @@ export default function AuthContainer({ setIsAuthentic, handleLogin, setUserId }
       setIsAuthentic(true);
       handleLogin(res.data.token, res.data.userId);
       setUserId(res.data.userId);  // Set the user ID in state
-      navigate("/");  // Redirect to home page
+      navigate("/dashboard");  // Redirect to home page
     } catch (error) {
       alert(error.response?.data?.msg || "Login failed!");
     }
@@ -99,7 +99,7 @@ export default function AuthContainer({ setIsAuthentic, handleLogin, setUserId }
         {/* Sign Up */}
         <div id='signup_part1' className="w-full max-w-md p-8 hidden">
           <div className="flex items-center justify-start mb-8">
-            <img src="background.jpg" alt="Razorpay icon" className="w-10 h-10 mr-2 rounded-full" />
+            <img src="/vite.svg" alt="Razorpay icon" className="w-10 h-10 mr-2 rounded-full" />
             <h2 className="text-xl font-semibold text-center">Welcome to <span className="text-purple-400 font-semibold text-2xl">DRDO</span></h2>
           </div>
           <h1 className="text-3xl font-semibold mb-6">Get started with your ID</h1>
@@ -125,9 +125,9 @@ export default function AuthContainer({ setIsAuthentic, handleLogin, setUserId }
         </div>
 
         {/* Login */}
-        <div id='login' className="w-full max-w-md p-8 ">
+        <div id='login' className="w-full max-w-md p-8">
           <div className="flex items-center justify-start mb-6">
-            <img src="background.jpg" alt="Razorpay icon" className="w-10 h-10 mr-2 rounded-full" />
+            <img src="vite.svg" alt="Razorpay icon" className="w-10 h-10 mr-2 rounded-full" />
             <h2 className="text-xl font-semibold text-center">Welcome to <span className="text-purple-400 font-semibold text-2xl">DRDO</span></h2>
           </div>
           <h1 className="text-3xl font-semibold mb-6">Get started with your ID</h1>
