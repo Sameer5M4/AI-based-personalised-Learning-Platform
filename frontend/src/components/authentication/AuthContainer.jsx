@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 export default function AuthContainer({ setIsAuthentic, handleLogin, setUserId }) {
 
-  const [formData, setFormData] = useState({ name:"", email: "", password: "", confirmPassword: "" });
+  const [formData, setFormData] = useState({ name: "", email: "", password: "", confirmPassword: "" });
   const [loginData, setLoginData] = useState({ email: "", password: "" })
 
   const handleChange = (e) => {
@@ -81,16 +81,17 @@ export default function AuthContainer({ setIsAuthentic, handleLogin, setUserId }
   return (
     <div className="flex flex-col lg:flex-row w-screen h-screen">
 
-      <img src="login2.png" loading='lazy' alt="A woman smiling while looking at a tablet" className="absolute w-full h-full object-fit" />
+      <img src="loginpagepic.png" loading='lazy' alt="A woman smiling while looking at a tablet" className="absolute w-full h-full object-fit" />
       <div className="flex w-3/4 h-full">
         <div className="absolute top-8 left-8">
           <FaArrowLeft color='white' className='w-20 h-10 bg-gray-900/70 p-2 border-2 border-purple-400 rounded-xl shadow-2xl cursor-pointer' size={'28px'} onClick={handleBack} />
         </div>
         <div className="absolute bottom-16 left-8 w-1/2 text-white">
           <h1 className="text-3xl font-semibold">
-            Join <span className="text-red-500">Us</span> in Secure Communication. 🛡️
-            <br />Encrypted. Confidential. Unbreakable. ⚡🔐
+            Empower <span className="text-blue-500">Your Learning</span> with AI. 🚀
+            <br /> Personalized. Smart. Future-Ready. 📚🤖
           </h1>
+
         </div>
 
       </div>
@@ -100,9 +101,9 @@ export default function AuthContainer({ setIsAuthentic, handleLogin, setUserId }
         <div id='signup_part1' className="w-full max-w-md p-8 hidden">
           <div className="flex items-center justify-start mb-8">
             <img src="/vite.svg" alt="Razorpay icon" className="w-10 h-10 mr-2 rounded-full" />
-            <h2 className="text-xl font-semibold text-center">Welcome to <span className="text-purple-400 font-semibold text-2xl">DRDO</span></h2>
+            <h2 className="text-xl font-semibold text-center">Welcome to <span className="text-purple-400 font-semibold text-2xl">AI-Learning</span></h2>
           </div>
-          <h1 className="text-3xl font-semibold mb-6">Get started with your ID</h1>
+          <h1 className="text-2xl font-semibold mb-6">Get started with your Email</h1>
           <div className="flex justify-center items-center border-b-2  mb-4">
             <FaUser size={"20px"} />
             <input name="name" type="text" placeholder="Enter your Name" onChange={handleChange} className="w-full placeholder-gray-200 text-lg focus:outline-none  p-3 bg-transparent " required />
@@ -128,9 +129,9 @@ export default function AuthContainer({ setIsAuthentic, handleLogin, setUserId }
         <div id='login' className="w-full max-w-md p-8">
           <div className="flex items-center justify-start mb-6">
             <img src="vite.svg" alt="Razorpay icon" className="w-10 h-10 mr-2 rounded-full" />
-            <h2 className="text-xl font-semibold text-center">Welcome to <span className="text-purple-400 font-semibold text-2xl">DRDO</span></h2>
+            <h2 className="text-xl font-semibold text-center">Welcome to <span className="text-purple-400 font-semibold text-2xl">AI-Learning</span></h2>
           </div>
-          <h1 className="text-3xl font-semibold mb-6">Get started with your ID</h1>
+          <h1 className="text-2xl font-semibold mb-6">Get started with your Email</h1>
           <div className="flex justify-center items-center border-b-2  mb-4">
             <FaUser size={"20px"} />
             <input onChange={handleChangeLogin} name='email' type="email" placeholder="Email or Username" className="w-full placeholder-gray-200 text-lg focus:outline-none  p-3 bg-transparent " required />

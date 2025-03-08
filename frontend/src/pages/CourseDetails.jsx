@@ -92,116 +92,345 @@ const CourseDetails = ({ coursename }) => {
 
   if (!course) return <p>Loading course details...</p>;
 
-  // Example Course Structure (Replace with API data)
   const courseStructure = [
     {
-      week: "Week 1",
+      week: "1",
       modules: [
         {
+          moduleId: "module 1",
           title: "Module 1: Introduction to Web Development",
-          topics: ["HTML Basics", "CSS Fundamentals", "JavaScript Overview"],
+          topics: [{
+            name: "HTML Basics",
+            topicId: "topic1",
+            isCompleted: false
+          },
+          {
+            name: "CSS Fundamentals",
+            topicId: "topic2",
+            isCompleted: false
+          },
+          {
+            name: "JavaScript",
+            topicId: "topic3",
+            isCompleted: false
+          }
+          ],
           quiz: "Module 1 Quiz",
         },
         {
+          moduleId: "module 2",
           title: "Module 2: Frontend Frameworks",
-          topics: ["React Basics", "Component Structure", "State Management"],
+          topics: [{
+            name: "React Basics",
+            topicId: "topic1",
+            isCompleted: false
+          },
+          {
+            name: "Component Structure",
+            topicId: "topic2",
+            isCompleted: false
+          },
+          {
+            name: "State Management",
+            topicId: "topic3",
+            isCompleted: false
+          }
+          ],
           quiz: "Module 2 Quiz",
         },
       ],
     },
+
     {
-      week: "Week 2",
+      week: "2",
       modules: [
         {
-          title: "Module 3: Backend Basics",
-          topics: ["Node.js Overview", "Express.js Basics", "REST APIs"],
-          quiz: "Module 3 Quiz",
+          moduleId: "module 3",
+          title: "Module 3: Introduction to Web Development",
+          topics: [{
+            name: "HTML Basics",
+            topicId: "topic1",
+            isCompleted: false
+          },
+          {
+            name: "CSS Fundamentals",
+            topicId: "topic2",
+            isCompleted: false
+          },
+          {
+            name: "JavaScript",
+            topicId: "topic3",
+            isCompleted: false
+          }
+          ],
+          quiz: "Module 1 Quiz",
         },
         {
-          title: "Module 4: Database Management",
-          topics: ["MongoDB Basics", "CRUD Operations", "Mongoose Models"],
-          quiz: "Module 4 Quiz",
+          moduleId: "module 2",
+          title: "Module 4: Frontend Frameworks",
+          topics: [{
+            name: "React Basics",
+            topicId: "topic1",
+            isCompleted: false
+          },
+          {
+            name: "Component Structure",
+            topicId: "topic2",
+            isCompleted: false
+          },
+          {
+            name: "State Management",
+            topicId: "topic3",
+            isCompleted: false
+          }
+          ],
+          quiz: "Module 2 Quiz",
         },
       ],
     },
+
     {
-      week: "Week 3",
+      week: "3",
       modules: [
         {
-          title: "Module 3: Backend Basics",
-          topics: ["Node.js Overview", "Express.js Basics", "REST APIs"],
-          quiz: "Module 3 Quiz",
+          moduleId: "module 1",
+          title: "Module 1: Introduction to Web Development",
+          topics: [{
+            name: "HTML Basics",
+            topicId: "topic1",
+            isCompleted: false
+          },
+          {
+            name: "CSS Fundamentals",
+            topicId: "topic2",
+            isCompleted: false
+          },
+          {
+            name: "JavaScript",
+            topicId: "topic3",
+            isCompleted: false
+          }
+          ],
+          quiz: "Module 1 Quiz",
         },
         {
-          title: "Module 4: Database Management",
-          topics: ["MongoDB Basics", "CRUD Operations", "Mongoose Models"],
-          quiz: "Module 4 Quiz",
+          moduleId: "module 2",
+          title: "Module 2: Frontend Frameworks",
+          topics: [{
+            name: "React Basics",
+            topicId: "topic1",
+            isCompleted: false
+          },
+          {
+            name: "Component Structure",
+            topicId: "topic2",
+            isCompleted: false
+          },
+          {
+            name: "State Management",
+            topicId: "topic3",
+            isCompleted: false
+          }
+          ],
+          quiz: "Module 2 Quiz",
         },
       ],
     },
+
     {
-      week: "Week 4",
+      week: "4",
       modules: [
         {
-          title: "Module 3: Backend Basics",
-          topics: ["Node.js Overview", "Express.js Basics", "REST APIs"],
-          quiz: "Module 3 Quiz",
+          moduleId: "module 1",
+          title: "Module 1: Introduction to Web Development",
+          topics: [{
+            name: "HTML Basics",
+            topicId: "topic1",
+            isCompleted: false
+          },
+          {
+            name: "CSS Fundamentals",
+            topicId: "topic2",
+            isCompleted: false
+          },
+          {
+            name: "JavaScript",
+            topicId: "topic3",
+            isCompleted: false
+          }
+          ],
+          quiz: "Module 1 Quiz",
         },
         {
-          title: "Module 4: Database Management",
-          topics: ["MongoDB Basics", "CRUD Operations", "Mongoose Models"],
-          quiz: "Module 4 Quiz",
+          moduleId: "module 2",
+          title: "Module 2: Frontend Frameworks",
+          topics: [{
+            name: "React Basics",
+            topicId: "topic1",
+            isCompleted: false
+          },
+          {
+            name: "Component Structure",
+            topicId: "topic2",
+            isCompleted: false
+          },
+          {
+            name: "State Management",
+            topicId: "topic3",
+            isCompleted: false
+          }
+          ],
+          quiz: "Module 2 Quiz",
         },
       ],
     },
+
     {
-      week: "Week 5",
+      week: "5",
       modules: [
         {
-          title: "Module 3: Backend Basics",
-          topics: ["Node.js Overview", "Express.js Basics", "REST APIs"],
-          quiz: "Module 3 Quiz",
+          moduleId: "module 1",
+          title: "Module 1: Introduction to Web Development",
+          topics: [{
+            name: "HTML Basics",
+            topicId: "topic1",
+            isCompleted: false
+          },
+          {
+            name: "CSS Fundamentals",
+            topicId: "topic2",
+            isCompleted: false
+          },
+          {
+            name: "JavaScript",
+            topicId: "topic3",
+            isCompleted: false
+          }
+          ],
+          quiz: "Module 1 Quiz",
         },
         {
-          title: "Module 4: Database Management",
-          topics: ["MongoDB Basics", "CRUD Operations", "Mongoose Models"],
-          quiz: "Module 4 Quiz",
+          moduleId: "module 2",
+          title: "Module 2: Frontend Frameworks",
+          topics: [{
+            name: "React Basics",
+            topicId: "topic1",
+            isCompleted: false
+          },
+          {
+            name: "Component Structure",
+            topicId: "topic2",
+            isCompleted: false
+          },
+          {
+            name: "State Management",
+            topicId: "topic3",
+            isCompleted: false
+          }
+          ],
+          quiz: "Module 2 Quiz",
         },
       ],
     },
+
     {
-      week: "Week 6",
+      week: "6",
       modules: [
         {
-          title: "Module 3: Backend Basics",
-          topics: ["Node.js Overview", "Express.js Basics", "REST APIs"],
-          quiz: "Module 3 Quiz",
+          moduleId: "module 1",
+          title: "Module 1: Introduction to Web Development",
+          topics: [{
+            name: "HTML Basics",
+            topicId: "topic1",
+            isCompleted: false
+          },
+          {
+            name: "CSS Fundamentals",
+            topicId: "topic2",
+            isCompleted: false
+          },
+          {
+            name: "JavaScript",
+            topicId: "topic3",
+            isCompleted: false
+          }
+          ],
+          quiz: "Module 1 Quiz",
         },
         {
-          title: "Module 4: Database Management",
-          topics: ["MongoDB Basics", "CRUD Operations", "Mongoose Models"],
-          quiz: "Module 4 Quiz",
+          moduleId: "module 2",
+          title: "Module 2: Frontend Frameworks",
+          topics: [{
+            name: "React Basics",
+            topicId: "topic1",
+            isCompleted: false
+          },
+          {
+            name: "Component Structure",
+            topicId: "topic2",
+            isCompleted: false
+          },
+          {
+            name: "State Management",
+            topicId: "topic3",
+            isCompleted: false
+          }
+          ],
+          quiz: "Module 2 Quiz",
         },
       ],
     },
+
     {
-      week: "Week 7",
+      week: "7",
       modules: [
         {
-          title: "Module 3: Backend Basics",
-          topics: ["Node.js Overview", "Express.js Basics", "REST APIs"],
-          quiz: "Module 3 Quiz",
+          moduleId: "module 1",
+          title: "Module 1: Introduction to Web Development",
+          topics: [{
+            name: "HTML Basics",
+            topicId: "topic1",
+            isCompleted: false
+          },
+          {
+            name: "CSS Fundamentals",
+            topicId: "topic2",
+            isCompleted: false
+          },
+          {
+            name: "JavaScript",
+            topicId: "topic3",
+            isCompleted: false
+          }
+          ],
+          quiz: "Module 1 Quiz",
         },
         {
-          title: "Module 4: Database Management",
-          topics: ["MongoDB Basics", "CRUD Operations", "Mongoose Models"],
-          quiz: "Module 4 Quiz",
+          moduleId: "module 2",
+          title: "Module 2: Frontend Frameworks",
+          topics: [{
+            name: "React Basics",
+            topicId: "topic1",
+            isCompleted: false
+          },
+          {
+            name: "Component Structure",
+            topicId: "topic2",
+            isCompleted: false
+          },
+          {
+            name: "State Management",
+            topicId: "topic3",
+            isCompleted: false
+          }
+          ],
+          quiz: "Module 2 Quiz",
         },
       ],
     },
+
 
   ];
-
   // Toggle week visibility
   const toggleWeek = (week) => {
     setExpandedWeeks((prev) => ({ ...prev, [week]: !prev[week] }));
@@ -248,7 +477,7 @@ const CourseDetails = ({ coursename }) => {
                     className="p-3 bg-gray-100 cursor-pointer flex justify-between items-center"
                     onClick={() => toggleWeek(week.week)}
                   >
-                    <p className="text-lg font-bold text-purple-600">{week.week}</p>
+                    <p className="text-lg font-bold text-purple-600">Week {week.week}</p>
                     {expandedWeeks[week.week] ? <FaChevronUp /> : <FaChevronDown />}
                   </div>
 
@@ -271,7 +500,7 @@ const CourseDetails = ({ coursename }) => {
                             <div className="ml-6 mt-2 p-3 bg-blue-50 rounded-md">
                               <ul className=" ml-4 text-gray-600">
                                 {module.topics.map((topic, topicIndex) => (
-                                  <li key={topicIndex}>🔹 {topic}</li>
+                                  <li key={topicIndex}>🔹 {topic.name}</li>
                                 ))}
                               </ul>
                               <p className="text-green-600 mt-2">📝 {module.quiz}</p>

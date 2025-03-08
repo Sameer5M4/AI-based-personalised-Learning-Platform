@@ -5,8 +5,10 @@ import GraphComponent from './GraphComponent'
 import { FaPlus } from 'react-icons/fa'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
+import { Clock, TrendingUp, TrendingDown, CheckCircle, FileText } from "lucide-react";
+
 export default function Middle({ setCurrentPage, setActive }) {
-    
+
     const [courses, setCourses] = useState([]); // Store courses from backend
     const [recentCourses, setRecentCourses] = useState([]); // Store recent courses
 
@@ -37,33 +39,44 @@ export default function Middle({ setCurrentPage, setActive }) {
                     <GraphComponent />
                 </div>
                 <div className="flex flex-col w-1/3 gap-3">
+                    {/* Time Spent */}
                     <div className="bg-white p-4 rounded-xl shadow">
-                        <div className="flex items-center mb-2">
-                            <i className="fas fa-clock text-blue-500 text-2xl mr-4"></i>
-                            <div>
-                                <div className="text-lg font-semibold">Time Spend</div>
+                        <div className="flex items-center pl-3 gap-3 mb-2">
+                            <Clock className="text-blue-500" size={32} />
+                            <div className="ml-4">
+                                <div className="text-lg font-semibold">Time Spent</div>
                                 <div className="text-2xl font-bold">48 Hrs</div>
-                                <div className="text-sm text-green-500">+2.4% This Week</div>
+                                <div className="text-sm text-green-500 flex items-center">
+                                    <TrendingUp className="mr-1" size={16} /> +2.4% This Week
+                                </div>
                             </div>
                         </div>
                     </div>
+
+                    {/* Progress */}
                     <div className="bg-white p-4 rounded-xl shadow">
-                        <div className="flex items-center mb-2">
-                            <i className="fas fa-chart-line text-purple-500 text-2xl mr-4"></i>
-                            <div>
+                        <div className="flex items-center pl-3 gap-3 mb-2">
+                            <CheckCircle className="text-purple-500" size={32} />
+                            <div className="ml-4">
                                 <div className="text-lg font-semibold">Progress</div>
                                 <div className="text-2xl font-bold">38%</div>
-                                <div className="text-sm text-red-500">-1.7% This Week</div>
+                                <div className="text-sm text-red-500 flex items-center">
+                                    <TrendingDown className="mr-1" size={16} /> -1.7% This Week
+                                </div>
                             </div>
                         </div>
                     </div>
+
+                    {/* Assignments */}
                     <div className="bg-white p-4 rounded-xl shadow">
-                        <div className="flex items-center mb-2">
-                            <i className="fas fa-tasks text-pink-500 text-2xl mr-4"></i>
-                            <div>
-                                <div className="text-lg font-semibold">Assignment</div>
+                        <div className="flex items-center pl-3 gap-3 mb-2">
+                            <FileText className="text-pink-500" size={32} />
+                            <div className="ml-4">
+                                <div className="text-lg font-semibold">Assignments</div>
                                 <div className="text-2xl font-bold">23</div>
-                                <div className="text-sm text-green-500">+5 This Week</div>
+                                <div className="text-sm text-green-500 flex items-center">
+                                    <TrendingUp className="mr-1" size={16} /> +5 This Week
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -82,7 +95,7 @@ export default function Middle({ setCurrentPage, setActive }) {
             <div className="flex flex-wrap w-full gap-3 mt-3 items-center justify-center">
                 {
                     courses.map((course) => (
-                        <div key={course.id} onClick={() => { window.location.href = `/courses/${course.name}`;}} >
+                        <div key={course.id} onClick={() => { window.location.href = `/courses/${course.name}`; }} >
                             <PathCard
                                 key={course.id}
                                 name={course.title}

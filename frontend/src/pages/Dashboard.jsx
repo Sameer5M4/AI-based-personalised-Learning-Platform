@@ -16,13 +16,13 @@ import GenerateQuiz from './GenerateQuiz';
 export default function Dashboard({ userId, handleLogout, courses, coursename, isCourse, setIsCourse }) {
   const [active, setActive] = useState(isCourse ? 'Courses' : 'Home');
   const [darkMode, setDarkMode] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false)
   const [currentPage, setCurrentPage] = useState(isCourse ? 'Course-detail' : 'Home');
 
 
   useEffect(() => {
-    setTimeout(() => setLoading(false), 1500);
+    setTimeout(() => setLoading(false), 0);
   }, [currentPage]);
 
   useEffect(() => {

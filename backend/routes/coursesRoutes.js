@@ -1,83 +1,126 @@
 const express = require('express');
+const mongoose = require("mongoose");
+const Course = require("../models/Course"); // Ensure the correct path to the Course model
+const Roadmap = require("../models/Roadmap");
+
 const router = express.Router();
 
-const courses = [{
-    id: 1,
-    name: "web-design-masterclass",
-    title: "Web Design Masterclass",
-    instructor: "Arlene Watson",
-    category: "Development",
-    tasks: 20,
-    progress: 70,
-    activeDays: 15,
-    remainingDays: 10,
-},
-{
-    id: 2,
-    name: "google-ads-analytics",
-    title: "Google Ads & Analytics",
-    instructor: "Arlene Watson",
-    category: "Marketing",
-    tasks: 16,
-    progress: 50,
-    activeDays: 12,
-    remainingDays: 8,
-},
-{
-    id: 3,
-    name: "react-redux-mastery",
-    title: "React & Redux Mastery",
-    instructor: "John Doe",
-    category: "Development",
-    tasks: 25,
-    progress: 85,
-    activeDays: 18,
-    remainingDays: 5,
-},
-{
-    id: 4,
-    name: "machine-learning-ai",
-    title: "Machine Learning & AI",
-    instructor: "Arlene Watson",
-    category: "Marketing",
-    tasks: 16,
-    progress: 50,
-    activeDays: 12,
-    remainingDays: 8,
-},
-{
-    id: 5,
-    name: "full-stack-development",
-    title: "Full Stack Development",
-    instructor: "John Doe",
-    category: "Development",
-    tasks: 25,
-    progress: 85,
-    activeDays: 18,
-    remainingDays: 5,
-}
-];
-
-router.get("/", (req, res) => {
-res.json(courses);
+// Route to get all courses
+router.get("/", async (req, res) => {
+    try {
+        const courses = await Course.find().populate("roadmapId"); // Populate roadmap details if needed
+        res.status(200).json({
+            success: true,
+            data: courses
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: "Server Error",
+            error: error.message
+        });
+    }
 });
 
-router.get("/recent", (req, res) => {
-const recentCourses = [...courses]
-    .sort((a, b) => b.progress - a.progress) // Sort by progress (highest first)
-    .slice(0, 3); // Get the top 3
-res.json(recentCourses);
+
+router.get("/recent", async (req, res) => {
+    try{
+        const recentCourses = await Course.find().populate("roadmapId").slice(0,3) ; // Get the top 3
+        res.status(200).json({
+            success: true,
+            data: recentCourses
+        });
+    }
+    catch(err){
+        console.log(err)
+    }
 });
 
-router.get("/:name", (req, res) => {
-const course = courses.find((c) => c.name === req.params.name);
-if (course) {
-    res.json(course);
-} else {
-    res.status(404).json({
-        message: "Course not found"
-    });
-}
+// Route to get a single course by ID
+router.get("/:id", async (req, res) => {
+    try {
+        const course = await courses.find((c) => c.name === req.params.name).populate("roadmapId");
+        if (!course) {
+            return res.status(404).json({
+                success: false,
+                message: "Course not found"
+            });
+        }
+        res.status(200).json({
+            success: true,
+            data: course
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: "Server Error",
+            error: error.message
+        });
+    }
 });
+
+router.post("/", async (req, res) => {
+    try {
+        const {
+            courseId,
+            courseName,
+            category,
+            duration,
+            remaining,
+            roadmapData
+        } = req.body;
+
+        // Step 1: Create a new Roadmap without courseId
+        const newRoadmap = new Roadmap({
+            roadmapData
+        });
+
+        const savedRoadmap = await newRoadmap.save();
+
+        // Step 2: Create a new Course linked to the roadmap
+        const newCourse = new Course({
+            courseId,
+            roadmapId: savedRoadmap._id, // Linking the roadmap
+            courseName,
+            category,
+            duration,
+            remaining,
+        });
+
+        const savedCourse = await newCourse.save();
+
+        // Step 3: Update the Roadmap with the Course ID
+        savedRoadmap.courseId = savedCourse._id;
+        await savedRoadmap.save();
+
+        res.status(201).json({
+            success: true,
+            message: "Course and Roadmap added successfully",
+            data: {
+                course: savedCourse,
+                roadmap: savedRoadmap
+            }
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: "Server Error",
+            error: error.message
+        });
+    }
+});
+
+
+
+// router.get("/:name", (req, res) => {
+// const course = courses.find((c) => c.name === req.params.name);
+// if (course) {
+//     res.json(course);
+// } else {
+//     res.status(404).json({
+//         message: "Course not found"
+//     });
+// }
+// });
 
 module.exports = router;

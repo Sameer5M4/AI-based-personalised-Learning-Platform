@@ -112,7 +112,7 @@ const GenerateQuiz = () => {
                                         </li>
                                     ))}
                                 </ul>
-                            </li>
+                            </li> 
                         ))}
                     </ul>
                 </div>
