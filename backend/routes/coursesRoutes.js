@@ -6,7 +6,7 @@ const Roadmap = require("../models/Roadmap");
 const router = express.Router();
 
 // Route to get all courses
-router.get("/", async (req, res) => {
+router.get("/:userId", async (req, res) => {
     try {
         const courses = await Course.find(); // Populate roadmap details if needed
         res.status(200).json({

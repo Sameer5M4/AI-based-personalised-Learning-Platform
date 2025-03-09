@@ -27,13 +27,8 @@ export default function QuizApp() {
     '3': '',
     '4': '',
     '5': '',
-    '6': '',
-    '7': '',
-    '8': '',
-    '9': '',
-    '10': '',
   });
-  const [timeLeft, setTimeLeft] = useState(600);
+  const [timeLeft, setTimeLeft] = useState(300);
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
