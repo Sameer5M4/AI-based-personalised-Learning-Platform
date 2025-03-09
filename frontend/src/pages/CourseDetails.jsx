@@ -73,24 +73,48 @@ const CourseDetails = ({ courseId }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [expandedWeeks, setExpandedWeeks] = useState({}); // Tracks expanded weeks
   const [expandedModules, setExpandedModules] = useState({}); // Tracks expanded modules
-  const [courseStructure,setCourseStructure] = useState({});
+  const [courseStructure, setCourseStructure] = useState({});
   useEffect(() => {
     setIsVisible(true);
   }, []);
 
+  // useEffect(() => {
+  //   const fetchCourse = async () => {
+  //     try {
+  //       const response = await axios.get(`http://localhost:5550/api/courses/${courseId}`);
+  //       setCourse(response.data.data);
+  //       setCourseStructure(response.data.data)
+  //       console.log(response.data.data);
+  //       try{
+  //         const res2 = await axios.get(`http://localhost:5550/api/roadmap/${courseId}`);
+  //         console.log(res2.data.data)
+  //       }catch (error) {
+  //         console.error("Error fetching Roadmap details:", error);
+  //       }
+  //     } catch (error) {
+  //       console.error("Error fetching course details:", error);
+  //     }
+  //   };
+  //   fetchCourse();
+  // }, [courseId]);
+  const [roadmap, setRoadmap] = useState(null);
+  // const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   useEffect(() => {
-    const fetchCourse = async () => {
+    const fetchRoadmap = async () => {
       try {
-        const response = await axios.get(`http://localhost:5555/api/courses/${courseId}`);
-        setCourse(response.data.data);
-        setCourseStructure(response.data.data.roadmapId.roadmapData['Week 1'])
-        // console.log(response.data.data);
-      } catch (error) {
-        console.error("Error fetching course details:", error);
+        const response = await axios.get(`http://localhost:5550/api/roadmap/${`ai_ml_roadmap_001`}`);
+        setRoadmap(response.data.roadmap);
+        console.log(response.data.roadmap)
+
+      } catch (err) {
+        setError(err.response?.data?.message || "Error fetching roadmap");
+
       }
     };
-    fetchCourse();
-  }, [courseId]);
+
+    fetchRoadmap();
+  }, []);
 
 
   if (!course) return <p></p>;
@@ -463,7 +487,7 @@ const CourseDetails = ({ courseId }) => {
                   </p>
                 </div>
                 <div className="">
-                  <CircularProgress progress={75}/>
+                  <CircularProgress progress={75} />
                 </div>
               </div>
               <div className="ml-32">
@@ -474,21 +498,21 @@ const CourseDetails = ({ courseId }) => {
             <div className="w-1/2 top-0 p-4 bg-white rounded-xl overflow-hidden shadow-md ">
               <h3 className="text-xl font-semibold mb-3">📅 Weekly Breakdown</h3>
               {courseStructure.map((week, index) => (
-                
+
                 <div key={index} className="mb-4 overflow-hidden rounded-lg">
                   {/* Week Header */}
                   <div
                     className="p-3 bg-gray-100 cursor-pointer flex justify-between items-center"
-                    onClick={() => toggleWeek(week[`Week ${index+1}` ])}
+                    onClick={() => toggleWeek(week[`Week ${index + 1}`])}
                   >
-                    <p className="text-lg font-bold text-purple-600">Week {index+1}</p>
-                    {expandedWeeks[week[`Week ${index+1}` ]] ? <FaChevronUp /> : <FaChevronDown />}
+                    <p className="text-lg font-bold text-purple-600">Week {index + 1}</p>
+                    {expandedWeeks[week[`Week ${index + 1}`]] ? <FaChevronUp /> : <FaChevronDown />}
                   </div>
 
                   {/* Modules (Visible only if week is expanded) */}
-                  {expandedWeeks[week[`Week ${index+1}`]] && (
+                  {expandedWeeks[week[`Week ${index + 1}`]] && (
                     <div className="p-3 bg-gray-50">
-                      {week[`Week ${index+1}`].map((module, modIndex) => (
+                      {week[`Week ${index + 1}`].map((module, modIndex) => (
                         <div key={modIndex} className="mb-3">
                           {/* Module Header */}
                           <div

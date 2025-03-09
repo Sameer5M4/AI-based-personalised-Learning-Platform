@@ -21,7 +21,7 @@ const App = () => {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const response = await axios.get("http://localhost:5555/api/courses");
+        const response = await axios.get("http://localhost:5550/api/courses");
         setCourses(response.data.data); // Extract `data` property
         console.log("Courses:", response.data.data);
       } catch (error) {

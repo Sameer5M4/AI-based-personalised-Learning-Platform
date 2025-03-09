@@ -99,13 +99,21 @@ export default function QuizApp() {
 
     console.log("Generated Roadmap:", roadmapResponse.data);
 
+    if (!roadmapResponse.data.roadmapData || !Array.isArray(roadmapResponse.data.roadmapData)) {
+      console.error("Invalid roadmapData format:", roadmapResponse.data.roadmapData);
+      alert("Invalid roadmap format received");
+      return;
+    }
+    
+
     // Add course to the database
-    const courseResponse = await axios.post("http://localhost:5555/api/courses", {
+    const courseResponse = await axios.post("http://localhost:5550/api/courses", {
       courseId: roadmapResponse.data.courseId,
       courseName: updatedQuiz.skill,
       category: "development",
       duration: estimatedTime,
       remaining: estimatedTime,
+      roadmapId: roadmapResponse.data.roadmapId,
       roadmapData: roadmapResponse.data.roadmapData,
     });
 

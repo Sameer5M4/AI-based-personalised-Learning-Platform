@@ -29,7 +29,7 @@ export default function LeftSidebar({ userId, active, setActive, currentPage, se
 
   useEffect(() => {
     if (userId) {
-      axios.get(`http://localhost:5555/api/user/${userId}`)
+      axios.get(`http://localhost:5550/api/user/${userId}`)
         .then((res) => {
           const data = res.data;
           setProfile({

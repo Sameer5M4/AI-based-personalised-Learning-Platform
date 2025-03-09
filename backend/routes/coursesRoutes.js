@@ -8,7 +8,7 @@ const router = express.Router();
 // Route to get all courses
 router.get("/", async (req, res) => {
     try {
-        const courses = await Course.find().populate("roadmapId"); // Populate roadmap details if needed
+        const courses = await Course.find(); // Populate roadmap details if needed
         res.status(200).json({
             success: true,
             data: courses
@@ -26,7 +26,6 @@ router.get("/", async (req, res) => {
 router.get("/recent", async (req, res) => {
     try {
         const recentCourses = await Course.find()
-            .populate("roadmapId")
             .sort({
                 createdAt: -1
             }) // Sort by createdAt in descending order
@@ -52,7 +51,7 @@ router.get("/:id", async (req, res) => {
     try {
         const course = await Course.findOne({
             courseId: req.params.id
-        }).populate("roadmapId");
+        }).populate('roadmapId') ; 
 
         if (!course) {
             return res.status(404).json({
@@ -75,53 +74,49 @@ router.get("/:id", async (req, res) => {
 });
 
 
+
 router.post("/", async (req, res) => {
     try {
-        const {
-            courseId,
-            courseName,
-            category,
-            duration,
-            remaining,
-            roadmapData
-        } = req.body;
+        console.log("Received Request Body:", req.body);
 
-        // Step 1: Create a new Roadmap without courseId
-        const newRoadmap = new Roadmap({
-            roadmapData
-        });
+        const { courseId, courseName, category, duration, remaining,roadmapId, roadmapData } = req.body;
 
+        if (!roadmapData || !Array.isArray(roadmapData)) {
+            return res.status(400).json({ success: false, message: "Invalid roadmap data format" });
+        }
+
+        // Step 1: Create a new Roadmap
+        const newRoadmap = new Roadmap({ courseId, roadmapId, roadmapData });
         const savedRoadmap = await newRoadmap.save();
+        
+        console.log("Saved Roadmap:", savedRoadmap);
 
         // Step 2: Create a new Course linked to the roadmap
         const newCourse = new Course({
-            courseId,
-            roadmapId: savedRoadmap._id, // Linking the roadmap
+            courseId, // Generate ID if missing
+            roadmapId, // Linking the roadmap
             courseName,
             category,
             duration,
             remaining,
         });
-
+ 
         const savedCourse = await newCourse.save();
-
-        // Step 3: Update the Roadmap with the Course ID
-        savedRoadmap.courseId = savedCourse._id;
-        await savedRoadmap.save();
+        console.log("Saved Course:", savedCourse);
 
         res.status(201).json({
             success: true,
             message: "Course and Roadmap added successfully",
-            data: {
-                course: savedCourse,
-                roadmap: savedRoadmap
-            }
+            data: { course: savedCourse, roadmap: savedRoadmap }
         });
+
     } catch (error) {
+        console.error("Server Error:", error);
         res.status(500).json({
             success: false,
             message: "Server Error",
-            error: error.message
+            error: error.message,
+            details: error.errors || null
         });
     }
 });

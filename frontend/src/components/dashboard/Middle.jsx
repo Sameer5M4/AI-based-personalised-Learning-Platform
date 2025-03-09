@@ -16,13 +16,13 @@ export default function Middle({ setCurrentPage, setActive }) {
     useEffect(() => {
         const fetchCourses = async () => {
             try {
-                const response = await axios.get("http://localhost:5555/api/courses"); // Adjust the URL
+                const response = await axios.get("http://localhost:5550/api/courses"); // Adjust the URL
                 setCourses(response.data.data);
             } catch (error) {
                 console.error("Error fetching courses:", error);
             }
             try {
-                const response2 = await axios.get("http://localhost:5555/api/courses/recent"); // Adjust the URL
+                const response2 = await axios.get("http://localhost:5550/api/courses/recent"); // Adjust the URL
                 setRecentCourses(response2.data.data);
             } catch (error) {
                 console.error("Error fetching courses:", error);
