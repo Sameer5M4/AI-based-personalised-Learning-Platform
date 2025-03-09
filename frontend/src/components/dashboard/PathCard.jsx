@@ -10,7 +10,7 @@ const PathCard = ({ name, completed, active, remaining }) => {
             <div className="panel-header">
               <div className="system-status">
                 <span className="status-indicator" />
-                <span className="status-text w-full">{name.toUpperCase()}</span>
+                <span className="status-text w-full">{name}</span>
               </div>
             </div> 
             <div className="progress-section">

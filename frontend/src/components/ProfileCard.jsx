@@ -18,7 +18,7 @@ const ProfileCard = ({ userId, name, image }) => {
     const formData = new FormData();
     formData.append("image", file);
 
-    axios.post(`http://localhost:5000/api/user/${userId}/upload`, formData, {
+    axios.post(`http://localhost:5555/api/user/${userId}/upload`, formData, {
       headers: { "Content-Type": "multipart/form-data" },
     })
       .then(response => {
@@ -45,7 +45,7 @@ const ProfileCard = ({ userId, name, image }) => {
         <div className="absolute -top-15 left-10">
           <img
             // src="/profileimg.png"
-            src= {profileimage ? `http://localhost:5000${profileimage}`: `http://localhost:5000${image}`}
+            src= {profileimage ? `http://localhost:5555${profileimage}`: `http://localhost:5555${image}`}
             alt="Profile"
             className="w-30 h-30 rounded-full border-4 border-white"
           />

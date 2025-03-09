@@ -16,14 +16,14 @@ export default function Middle({ setCurrentPage, setActive }) {
     useEffect(() => {
         const fetchCourses = async () => {
             try {
-                const response = await axios.get("http://localhost:5000/api/courses"); // Adjust the URL
-                setCourses(response.data);
+                const response = await axios.get("http://localhost:5555/api/courses"); // Adjust the URL
+                setCourses(response.data.data);
             } catch (error) {
                 console.error("Error fetching courses:", error);
             }
             try {
-                const response2 = await axios.get("http://localhost:5000/api/courses/recent"); // Adjust the URL
-                setRecentCourses(response2.data);
+                const response2 = await axios.get("http://localhost:5555/api/courses/recent"); // Adjust the URL
+                setRecentCourses(response2.data.data);
             } catch (error) {
                 console.error("Error fetching courses:", error);
             }
@@ -94,14 +94,14 @@ export default function Middle({ setCurrentPage, setActive }) {
             </div>
             <div className="flex flex-wrap w-full gap-3 mt-3 items-center justify-center">
                 {
-                    courses.map((course) => (
-                        <div key={course.id} onClick={() => { window.location.href = `/courses/${course.name}`; }} >
+                    courses.map((course,index) => (
+                        <div key={index} onClick={() => { window.location.href = `/courses/${course.courseId}`; }} >
                             <PathCard
-                                key={course.id}
-                                name={course.title}
-                                completed={course.progress}
-                                active={course.activeDays}
-                                remaining={course.remainingDays}
+                                key={course.courseId}
+                                name={course.courseName}
+                                completed={75}
+                                active={course.duration}
+                                remaining={course.remaining}
                             />
                         </div>
                     ))
@@ -123,19 +123,19 @@ export default function Middle({ setCurrentPage, setActive }) {
                                 </tr>
                             </thead>
                             <tbody>
-                                {recentCourses.map((course) => (
-                                    <tr key={course.id}>
+                                {recentCourses.map((course,index) => (
+                                    <tr key={index}>
                                         <td className="border-t px-4 py-2">
                                             <div className="flex items-center">
                                                 <img alt="Course" className="object-cover w-10 h-10 rounded-md mr-4" src="login2.png" />
                                                 <div>
-                                                    <div className="font-semibold">{course.title}</div>
-                                                    <div className="text-sm text-gray-600">By {course.instructor}</div>
+                                                    <div className="font-semibold">{course.courseName}</div>
+                                                    <div className="text-sm text-gray-600"> </div>
                                                 </div>
                                             </div>
                                         </td>
                                         <td className="border-t px-4 py-2">{course.category}</td>
-                                        <td className="border-t px-4 py-2">{course.tasks} Tasks</td>
+                                        <td className="border-t px-4 py-2">{20} Tasks</td>
                                         <td className="border-t px-4 py-2">
                                             <div className="relative pt-1">
                                                 <div className="overflow-hidden h-2 text-xs flex rounded bg-blue-200">
@@ -143,8 +143,8 @@ export default function Middle({ setCurrentPage, setActive }) {
                                                 </div>
                                             </div>
                                         </td>
-                                        <td className="border-t px-4 py-2">{course.activeDays} Days</td>
-                                        <td className="border-t px-4 py-2">{course.remainingDays} Days</td>
+                                        <td className="border-t px-4 py-2">{course.duration} Days</td>
+                                        <td className="border-t px-4 py-2">{course.remaining} Days</td>
                                     </tr>
                                 ))}
 

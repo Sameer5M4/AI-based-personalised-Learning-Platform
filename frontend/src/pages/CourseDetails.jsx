@@ -68,12 +68,12 @@ const Roadmap = ({ weeks }) => {
 };
 
 
-const CourseDetails = ({ coursename }) => {
+const CourseDetails = ({ courseId }) => {
   const [course, setCourse] = useState(null);
   const [isVisible, setIsVisible] = useState(false);
   const [expandedWeeks, setExpandedWeeks] = useState({}); // Tracks expanded weeks
   const [expandedModules, setExpandedModules] = useState({}); // Tracks expanded modules
-
+  const [courseStructure,setCourseStructure] = useState({});
   useEffect(() => {
     setIsVisible(true);
   }, []);
@@ -81,356 +81,359 @@ const CourseDetails = ({ coursename }) => {
   useEffect(() => {
     const fetchCourse = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/courses/${coursename}`);
-        setCourse(response.data);
+        const response = await axios.get(`http://localhost:5555/api/courses/${courseId}`);
+        setCourse(response.data.data);
+        setCourseStructure(response.data.data.roadmapId.roadmapData['Week 1'])
+        // console.log(response.data.data);
       } catch (error) {
         console.error("Error fetching course details:", error);
       }
     };
     fetchCourse();
-  }, [coursename]);
-
-  if (!course) return <p>Loading course details...</p>;
-
-  const courseStructure = [
-    {
-      week: "1",
-      modules: [
-        {
-          moduleId: "module 1",
-          title: "Module 1: Introduction to Web Development",
-          topics: [{
-            name: "HTML Basics",
-            topicId: "topic1",
-            isCompleted: false
-          },
-          {
-            name: "CSS Fundamentals",
-            topicId: "topic2",
-            isCompleted: false
-          },
-          {
-            name: "JavaScript",
-            topicId: "topic3",
-            isCompleted: false
-          }
-          ],
-          quiz: "Module 1 Quiz",
-        },
-        {
-          moduleId: "module 2",
-          title: "Module 2: Frontend Frameworks",
-          topics: [{
-            name: "React Basics",
-            topicId: "topic1",
-            isCompleted: false
-          },
-          {
-            name: "Component Structure",
-            topicId: "topic2",
-            isCompleted: false
-          },
-          {
-            name: "State Management",
-            topicId: "topic3",
-            isCompleted: false
-          }
-          ],
-          quiz: "Module 2 Quiz",
-        },
-      ],
-    },
-
-    {
-      week: "2",
-      modules: [
-        {
-          moduleId: "module 3",
-          title: "Module 3: Introduction to Web Development",
-          topics: [{
-            name: "HTML Basics",
-            topicId: "topic1",
-            isCompleted: false
-          },
-          {
-            name: "CSS Fundamentals",
-            topicId: "topic2",
-            isCompleted: false
-          },
-          {
-            name: "JavaScript",
-            topicId: "topic3",
-            isCompleted: false
-          }
-          ],
-          quiz: "Module 1 Quiz",
-        },
-        {
-          moduleId: "module 2",
-          title: "Module 4: Frontend Frameworks",
-          topics: [{
-            name: "React Basics",
-            topicId: "topic1",
-            isCompleted: false
-          },
-          {
-            name: "Component Structure",
-            topicId: "topic2",
-            isCompleted: false
-          },
-          {
-            name: "State Management",
-            topicId: "topic3",
-            isCompleted: false
-          }
-          ],
-          quiz: "Module 2 Quiz",
-        },
-      ],
-    },
-
-    {
-      week: "3",
-      modules: [
-        {
-          moduleId: "module 1",
-          title: "Module 1: Introduction to Web Development",
-          topics: [{
-            name: "HTML Basics",
-            topicId: "topic1",
-            isCompleted: false
-          },
-          {
-            name: "CSS Fundamentals",
-            topicId: "topic2",
-            isCompleted: false
-          },
-          {
-            name: "JavaScript",
-            topicId: "topic3",
-            isCompleted: false
-          }
-          ],
-          quiz: "Module 1 Quiz",
-        },
-        {
-          moduleId: "module 2",
-          title: "Module 2: Frontend Frameworks",
-          topics: [{
-            name: "React Basics",
-            topicId: "topic1",
-            isCompleted: false
-          },
-          {
-            name: "Component Structure",
-            topicId: "topic2",
-            isCompleted: false
-          },
-          {
-            name: "State Management",
-            topicId: "topic3",
-            isCompleted: false
-          }
-          ],
-          quiz: "Module 2 Quiz",
-        },
-      ],
-    },
-
-    {
-      week: "4",
-      modules: [
-        {
-          moduleId: "module 1",
-          title: "Module 1: Introduction to Web Development",
-          topics: [{
-            name: "HTML Basics",
-            topicId: "topic1",
-            isCompleted: false
-          },
-          {
-            name: "CSS Fundamentals",
-            topicId: "topic2",
-            isCompleted: false
-          },
-          {
-            name: "JavaScript",
-            topicId: "topic3",
-            isCompleted: false
-          }
-          ],
-          quiz: "Module 1 Quiz",
-        },
-        {
-          moduleId: "module 2",
-          title: "Module 2: Frontend Frameworks",
-          topics: [{
-            name: "React Basics",
-            topicId: "topic1",
-            isCompleted: false
-          },
-          {
-            name: "Component Structure",
-            topicId: "topic2",
-            isCompleted: false
-          },
-          {
-            name: "State Management",
-            topicId: "topic3",
-            isCompleted: false
-          }
-          ],
-          quiz: "Module 2 Quiz",
-        },
-      ],
-    },
-
-    {
-      week: "5",
-      modules: [
-        {
-          moduleId: "module 1",
-          title: "Module 1: Introduction to Web Development",
-          topics: [{
-            name: "HTML Basics",
-            topicId: "topic1",
-            isCompleted: false
-          },
-          {
-            name: "CSS Fundamentals",
-            topicId: "topic2",
-            isCompleted: false
-          },
-          {
-            name: "JavaScript",
-            topicId: "topic3",
-            isCompleted: false
-          }
-          ],
-          quiz: "Module 1 Quiz",
-        },
-        {
-          moduleId: "module 2",
-          title: "Module 2: Frontend Frameworks",
-          topics: [{
-            name: "React Basics",
-            topicId: "topic1",
-            isCompleted: false
-          },
-          {
-            name: "Component Structure",
-            topicId: "topic2",
-            isCompleted: false
-          },
-          {
-            name: "State Management",
-            topicId: "topic3",
-            isCompleted: false
-          }
-          ],
-          quiz: "Module 2 Quiz",
-        },
-      ],
-    },
-
-    {
-      week: "6",
-      modules: [
-        {
-          moduleId: "module 1",
-          title: "Module 1: Introduction to Web Development",
-          topics: [{
-            name: "HTML Basics",
-            topicId: "topic1",
-            isCompleted: false
-          },
-          {
-            name: "CSS Fundamentals",
-            topicId: "topic2",
-            isCompleted: false
-          },
-          {
-            name: "JavaScript",
-            topicId: "topic3",
-            isCompleted: false
-          }
-          ],
-          quiz: "Module 1 Quiz",
-        },
-        {
-          moduleId: "module 2",
-          title: "Module 2: Frontend Frameworks",
-          topics: [{
-            name: "React Basics",
-            topicId: "topic1",
-            isCompleted: false
-          },
-          {
-            name: "Component Structure",
-            topicId: "topic2",
-            isCompleted: false
-          },
-          {
-            name: "State Management",
-            topicId: "topic3",
-            isCompleted: false
-          }
-          ],
-          quiz: "Module 2 Quiz",
-        },
-      ],
-    },
-
-    {
-      week: "7",
-      modules: [
-        {
-          moduleId: "module 1",
-          title: "Module 1: Introduction to Web Development",
-          topics: [{
-            name: "HTML Basics",
-            topicId: "topic1",
-            isCompleted: false
-          },
-          {
-            name: "CSS Fundamentals",
-            topicId: "topic2",
-            isCompleted: false
-          },
-          {
-            name: "JavaScript",
-            topicId: "topic3",
-            isCompleted: false
-          }
-          ],
-          quiz: "Module 1 Quiz",
-        },
-        {
-          moduleId: "module 2",
-          title: "Module 2: Frontend Frameworks",
-          topics: [{
-            name: "React Basics",
-            topicId: "topic1",
-            isCompleted: false
-          },
-          {
-            name: "Component Structure",
-            topicId: "topic2",
-            isCompleted: false
-          },
-          {
-            name: "State Management",
-            topicId: "topic3",
-            isCompleted: false
-          }
-          ],
-          quiz: "Module 2 Quiz",
-        },
-      ],
-    },
+  }, [courseId]);
 
 
-  ];
+  if (!course) return <p></p>;
+
+  // const courseStructure = [
+  //   {
+  //     week: "1",
+  //     modules: [
+  //       {
+  //         moduleId: "module 1",
+  //         title: "Module 1: Introduction to Web Development",
+  //         topics: [{
+  //           name: "HTML Basics",
+  //           topicId: "topic1",
+  //           isCompleted: false
+  //         },
+  //         {
+  //           name: "CSS Fundamentals",
+  //           topicId: "topic2",
+  //           isCompleted: false
+  //         },
+  //         {
+  //           name: "JavaScript",
+  //           topicId: "topic3",
+  //           isCompleted: false
+  //         }
+  //         ],
+  //         quiz: "Module 1 Quiz",
+  //       },
+  //       {
+  //         moduleId: "module 2",
+  //         title: "Module 2: Frontend Frameworks",
+  //         topics: [{
+  //           name: "React Basics",
+  //           topicId: "topic1",
+  //           isCompleted: false
+  //         },
+  //         {
+  //           name: "Component Structure",
+  //           topicId: "topic2",
+  //           isCompleted: false
+  //         },
+  //         {
+  //           name: "State Management",
+  //           topicId: "topic3",
+  //           isCompleted: false
+  //         }
+  //         ],
+  //         quiz: "Module 2 Quiz",
+  //       },
+  //     ],
+  //   },
+
+  //   {
+  //     week: "2",
+  //     modules: [
+  //       {
+  //         moduleId: "module 3",
+  //         title: "Module 3: Introduction to Web Development",
+  //         topics: [{
+  //           name: "HTML Basics",
+  //           topicId: "topic1",
+  //           isCompleted: false
+  //         },
+  //         {
+  //           name: "CSS Fundamentals",
+  //           topicId: "topic2",
+  //           isCompleted: false
+  //         },
+  //         {
+  //           name: "JavaScript",
+  //           topicId: "topic3",
+  //           isCompleted: false
+  //         }
+  //         ],
+  //         quiz: "Module 1 Quiz",
+  //       },
+  //       {
+  //         moduleId: "module 2",
+  //         title: "Module 4: Frontend Frameworks",
+  //         topics: [{
+  //           name: "React Basics",
+  //           topicId: "topic1",
+  //           isCompleted: false
+  //         },
+  //         {
+  //           name: "Component Structure",
+  //           topicId: "topic2",
+  //           isCompleted: false
+  //         },
+  //         {
+  //           name: "State Management",
+  //           topicId: "topic3",
+  //           isCompleted: false
+  //         }
+  //         ],
+  //         quiz: "Module 2 Quiz",
+  //       },
+  //     ],
+  //   },
+
+  //   {
+  //     week: "3",
+  //     modules: [
+  //       {
+  //         moduleId: "module 1",
+  //         title: "Module 1: Introduction to Web Development",
+  //         topics: [{
+  //           name: "HTML Basics",
+  //           topicId: "topic1",
+  //           isCompleted: false
+  //         },
+  //         {
+  //           name: "CSS Fundamentals",
+  //           topicId: "topic2",
+  //           isCompleted: false
+  //         },
+  //         {
+  //           name: "JavaScript",
+  //           topicId: "topic3",
+  //           isCompleted: false
+  //         }
+  //         ],
+  //         quiz: "Module 1 Quiz",
+  //       },
+  //       {
+  //         moduleId: "module 2",
+  //         title: "Module 2: Frontend Frameworks",
+  //         topics: [{
+  //           name: "React Basics",
+  //           topicId: "topic1",
+  //           isCompleted: false
+  //         },
+  //         {
+  //           name: "Component Structure",
+  //           topicId: "topic2",
+  //           isCompleted: false
+  //         },
+  //         {
+  //           name: "State Management",
+  //           topicId: "topic3",
+  //           isCompleted: false
+  //         }
+  //         ],
+  //         quiz: "Module 2 Quiz",
+  //       },
+  //     ],
+  //   },
+
+  //   {
+  //     week: "4",
+  //     modules: [
+  //       {
+  //         moduleId: "module 1",
+  //         title: "Module 1: Introduction to Web Development",
+  //         topics: [{
+  //           name: "HTML Basics",
+  //           topicId: "topic1",
+  //           isCompleted: false
+  //         },
+  //         {
+  //           name: "CSS Fundamentals",
+  //           topicId: "topic2",
+  //           isCompleted: false
+  //         },
+  //         {
+  //           name: "JavaScript",
+  //           topicId: "topic3",
+  //           isCompleted: false
+  //         }
+  //         ],
+  //         quiz: "Module 1 Quiz",
+  //       },
+  //       {
+  //         moduleId: "module 2",
+  //         title: "Module 2: Frontend Frameworks",
+  //         topics: [{
+  //           name: "React Basics",
+  //           topicId: "topic1",
+  //           isCompleted: false
+  //         },
+  //         {
+  //           name: "Component Structure",
+  //           topicId: "topic2",
+  //           isCompleted: false
+  //         },
+  //         {
+  //           name: "State Management",
+  //           topicId: "topic3",
+  //           isCompleted: false
+  //         }
+  //         ],
+  //         quiz: "Module 2 Quiz",
+  //       },
+  //     ],
+  //   },
+
+  //   {
+  //     week: "5",
+  //     modules: [
+  //       {
+  //         moduleId: "module 1",
+  //         title: "Module 1: Introduction to Web Development",
+  //         topics: [{
+  //           name: "HTML Basics",
+  //           topicId: "topic1",
+  //           isCompleted: false
+  //         },
+  //         {
+  //           name: "CSS Fundamentals",
+  //           topicId: "topic2",
+  //           isCompleted: false
+  //         },
+  //         {
+  //           name: "JavaScript",
+  //           topicId: "topic3",
+  //           isCompleted: false
+  //         }
+  //         ],
+  //         quiz: "Module 1 Quiz",
+  //       },
+  //       {
+  //         moduleId: "module 2",
+  //         title: "Module 2: Frontend Frameworks",
+  //         topics: [{
+  //           name: "React Basics",
+  //           topicId: "topic1",
+  //           isCompleted: false
+  //         },
+  //         {
+  //           name: "Component Structure",
+  //           topicId: "topic2",
+  //           isCompleted: false
+  //         },
+  //         {
+  //           name: "State Management",
+  //           topicId: "topic3",
+  //           isCompleted: false
+  //         }
+  //         ],
+  //         quiz: "Module 2 Quiz",
+  //       },
+  //     ],
+  //   },
+
+  //   {
+  //     week: "6",
+  //     modules: [
+  //       {
+  //         moduleId: "module 1",
+  //         title: "Module 1: Introduction to Web Development",
+  //         topics: [{
+  //           name: "HTML Basics",
+  //           topicId: "topic1",
+  //           isCompleted: false
+  //         },
+  //         {
+  //           name: "CSS Fundamentals",
+  //           topicId: "topic2",
+  //           isCompleted: false
+  //         },
+  //         {
+  //           name: "JavaScript",
+  //           topicId: "topic3",
+  //           isCompleted: false
+  //         }
+  //         ],
+  //         quiz: "Module 1 Quiz",
+  //       },
+  //       {
+  //         moduleId: "module 2",
+  //         title: "Module 2: Frontend Frameworks",
+  //         topics: [{
+  //           name: "React Basics",
+  //           topicId: "topic1",
+  //           isCompleted: false
+  //         },
+  //         {
+  //           name: "Component Structure",
+  //           topicId: "topic2",
+  //           isCompleted: false
+  //         },
+  //         {
+  //           name: "State Management",
+  //           topicId: "topic3",
+  //           isCompleted: false
+  //         }
+  //         ],
+  //         quiz: "Module 2 Quiz",
+  //       },
+  //     ],
+  //   },
+
+  //   {
+  //     week: "7",
+  //     modules: [
+  //       {
+  //         moduleId: "module 1",
+  //         title: "Module 1: Introduction to Web Development",
+  //         topics: [{
+  //           name: "HTML Basics",
+  //           topicId: "topic1",
+  //           isCompleted: false
+  //         },
+  //         {
+  //           name: "CSS Fundamentals",
+  //           topicId: "topic2",
+  //           isCompleted: false
+  //         },
+  //         {
+  //           name: "JavaScript",
+  //           topicId: "topic3",
+  //           isCompleted: false
+  //         }
+  //         ],
+  //         quiz: "Module 1 Quiz",
+  //       },
+  //       {
+  //         moduleId: "module 2",
+  //         title: "Module 2: Frontend Frameworks",
+  //         topics: [{
+  //           name: "React Basics",
+  //           topicId: "topic1",
+  //           isCompleted: false
+  //         },
+  //         {
+  //           name: "Component Structure",
+  //           topicId: "topic2",
+  //           isCompleted: false
+  //         },
+  //         {
+  //           name: "State Management",
+  //           topicId: "topic3",
+  //           isCompleted: false
+  //         }
+  //         ],
+  //         quiz: "Module 2 Quiz",
+  //       },
+  //     ],
+  //   },
+
+
+  // ];
   // Toggle week visibility
   const toggleWeek = (week) => {
     setExpandedWeeks((prev) => ({ ...prev, [week]: !prev[week] }));
@@ -452,39 +455,40 @@ const CourseDetails = ({ coursename }) => {
             <div className="flex flex-col items-center m-auto gap-10 w-1/2">
               <div className="flex gap-10 items-center">
                 <div className="">
-                  <h2 className="text-3xl font-bold text-gray-800">{course.title}</h2>
-                  <p className="text-gray-600">{course.description}</p>
-                  <p className="text-gray-700 font-semibold mt-4">✅ Completed: {course.progress}%</p>
+                  <h2 className="text-3xl font-bold text-gray-800">{course.courseName}</h2>
+                  {/* <p className="text-gray-600">{course.description}</p> */}
+                  <p className="text-gray-700 font-semibold mt-4">✅ Completed: {45}%</p>
                   <p className="text-gray-700 mt-1">
-                    📅 Active Days: {course.activeDays} | ⏳ Remaining Days: {course.remainingDays}
+                    📅 Active Hours: {course.duration} | ⏳ Remaining Hours: {course.remaining}
                   </p>
                 </div>
                 <div className="">
-                  <CircularProgress progress={course.progress}/>
+                  <CircularProgress progress={75}/>
                 </div>
               </div>
               <div className="ml-32">
-                <Roadmap weeks={courseStructure.map((week, index) => index + 1)} />
+                {/* <Roadmap weeks={courseStructure.map((week, index) => index + 1)} /> */}
 
               </div>
             </div>
             <div className="w-1/2 top-0 p-4 bg-white rounded-xl overflow-hidden shadow-md ">
               <h3 className="text-xl font-semibold mb-3">📅 Weekly Breakdown</h3>
               {courseStructure.map((week, index) => (
+                
                 <div key={index} className="mb-4 overflow-hidden rounded-lg">
                   {/* Week Header */}
                   <div
                     className="p-3 bg-gray-100 cursor-pointer flex justify-between items-center"
-                    onClick={() => toggleWeek(week.week)}
+                    onClick={() => toggleWeek(week[`Week ${index+1}` ])}
                   >
-                    <p className="text-lg font-bold text-purple-600">Week {week.week}</p>
-                    {expandedWeeks[week.week] ? <FaChevronUp /> : <FaChevronDown />}
+                    <p className="text-lg font-bold text-purple-600">Week {index+1}</p>
+                    {expandedWeeks[week[`Week ${index+1}` ]] ? <FaChevronUp /> : <FaChevronDown />}
                   </div>
 
                   {/* Modules (Visible only if week is expanded) */}
-                  {expandedWeeks[week.week] && (
+                  {expandedWeeks[week[`Week ${index+1}`]] && (
                     <div className="p-3 bg-gray-50">
-                      {week.modules.map((module, modIndex) => (
+                      {week[`Week ${index+1}`].map((module, modIndex) => (
                         <div key={modIndex} className="mb-3">
                           {/* Module Header */}
                           <div
@@ -503,7 +507,7 @@ const CourseDetails = ({ coursename }) => {
                                   <li key={topicIndex}>🔹 {topic.name}</li>
                                 ))}
                               </ul>
-                              <p className="text-green-600 mt-2">📝 {module.quiz}</p>
+                              <p className="text-green-600 mt-2">📝 {module.duration}</p>
                             </div>
                           )}
                         </div>

@@ -13,7 +13,7 @@ import CourseDetails from './CourseDetails';
 import Profile from './Profile';
 import GenerateQuiz from './GenerateQuiz';
 
-export default function Dashboard({ userId, handleLogout, courses, coursename, isCourse, setIsCourse }) {
+export default function Dashboard({ userId, handleLogout, courses, courseId, isCourse, setIsCourse }) {
   const [active, setActive] = useState(isCourse ? 'Courses' : 'Home');
   const [darkMode, setDarkMode] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -70,7 +70,7 @@ export default function Dashboard({ userId, handleLogout, courses, coursename, i
           {currentPage === 'Home' && <Home userId={userId} darkMode={darkMode} setDarkMode={setDarkMode} setCurrentPage={setCurrentPage} setActive={setActive} />}
           {currentPage === 'Add-Path' && <CareerPath />}
           {currentPage === 'Courses' && <Courses setCurrentPage={setCurrentPage} courses={courses} />}
-          {currentPage === 'Course-detail' && <CourseDetails coursename={coursename} />}
+          {currentPage === 'Course-detail' && <CourseDetails courseId={courseId} />}
           {currentPage === 'Certifications' && <Assignments />}
           {/* {currentPage === 'Settings' && <GenerateQuiz />} */}
           {currentPage === 'Settings' && <Settings />}

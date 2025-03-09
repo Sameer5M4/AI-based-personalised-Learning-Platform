@@ -65,50 +65,66 @@ export default function QuizApp() {
   };
 
   const handleSubmit = async () => {
+  try {
     setLoading(true);
-    const updatedQuiz = { ...evaluateQuiz, 'selected_options': Object.values(selectedOptions) };
+    
+    const updatedQuiz = { 
+      ...evaluateQuiz, 
+      selected_options: Object.values(selectedOptions) 
+    };
     setEvaluateQuiz(updatedQuiz);
-    console.log(updatedQuiz)
-    try {
-      const response = await axios.post("http://127.0.0.1:5000/evaluate_quiz", {
-        skill: updatedQuiz.skill,
-        level: updatedQuiz.level,
-        goal: updatedQuiz.goal,
-        questions: updatedQuiz.questions,
-        selected_options: updatedQuiz.selected_options
-      });
-      console.log(response.data["estimated_time"]);
+    
+    console.log("Updated Quiz Data:", updatedQuiz);
 
-      const response2 = await axios.post("http://127.0.0.1:5000/generate_path", {
-        skill: updatedQuiz.skill,
-        level: updatedQuiz.level,
-        goal: updatedQuiz.goal,
-        duration_weeks: 8,
-        estimated_hours: response.data["estimated_time"]
-      });
-      console.log(response2.data)
-      try {
-        const response = await axios.post("http://localhost:5000/api/courses", {
-          courseId: response2.data.courseId,
-          courseName: response2.data.coursename,
-          category: "development",
-          duration: response.data["estimated_time"],
-          remaining: response.data["estimated_time"],
-          roadmapId: response2.data.roadmapData,
-        });
-        alert("Course and Roadmap added successfully!");
-        console.log(response.data);
-      } catch (error) {
-        console.error("Error adding course:", error.response?.data || error.message);
-        alert("Failed to add course");
-      }
-      localStorage.setItem("roadmap", JSON.stringify(response2.data));
-      setTimeout(() => { setLoading(false); navigate(`/courses/${response2.data.courseId}`) }, 10000);
+    // Evaluate quiz
+    const evalResponse = await axios.post("http://127.0.0.1:5000/evaluate_quiz", {
+      skill: updatedQuiz.skill,
+      level: updatedQuiz.level,
+      goal: updatedQuiz.goal,
+      questions: updatedQuiz.questions,
+      selected_options: updatedQuiz.selected_options
+    });
 
-    } catch (err) {
-      console.log('Error occured at evaluation of quiz', err);
-    }
+    const estimatedTime = evalResponse.data?.estimated_time;
+    console.log("Estimated Time:", estimatedTime);
+
+    // Generate roadmap
+    const roadmapResponse = await axios.post("http://127.0.0.1:5000/generate_path", {
+      skill: updatedQuiz.skill,
+      level: updatedQuiz.level,
+      goal: updatedQuiz.goal,
+      duration_weeks: 8,
+      estimated_hours: estimatedTime
+    });
+
+    console.log("Generated Roadmap:", roadmapResponse.data);
+
+    // Add course to the database
+    const courseResponse = await axios.post("http://localhost:5555/api/courses", {
+      courseId: roadmapResponse.data.courseId,
+      courseName: updatedQuiz.skill,
+      category: "development",
+      duration: estimatedTime,
+      remaining: estimatedTime,
+      roadmapData: roadmapResponse.data.roadmapData,
+    });
+
+    console.log("Course Added Successfully:", courseResponse.data);
+    alert("Course and Roadmap added successfully!");
+
+    // Navigate to the course page after a delay
+    setTimeout(() => {
+      setLoading(false);
+      navigate(`/courses`);
+    }, 3000);
+
+  } catch (error) {
+    console.error("Error occurred:", error.response?.data || error.message);
+    alert("An error occurred while processing your request.");
+    setLoading(false);
   }
+};
+
   return (
     <>
       {loading && <GenerateLoader />}

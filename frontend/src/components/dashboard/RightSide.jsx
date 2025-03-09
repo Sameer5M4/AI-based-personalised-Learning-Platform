@@ -9,7 +9,7 @@ export default function RightSide({ userId, darkMode, setDarkMode }) {
     });
     useEffect(() => {
         if (userId) {
-            axios.get(`http://localhost:5000/api/user/${userId}`)
+            axios.get(`http://localhost:5555/api/user/${userId}`)
                 .then((res) => {
                     const data = res.data;
                     setProfile({
@@ -35,7 +35,7 @@ export default function RightSide({ userId, darkMode, setDarkMode }) {
                 <span className="w-0.5 h-8 border-l-2 border-gray-400 mr-4"></span>
                 <div className="flex items-center space-x-2">
                     <img
-                        src={`http://localhost:5000${profile.image}`}
+                        src={`http://localhost:5555${profile.image}`}
                         alt="Profile"
                         className="w-10 h-10 rounded-full"
                     />

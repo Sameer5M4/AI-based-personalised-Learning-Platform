@@ -21,7 +21,7 @@ const App = () => {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/courses");
+        const response = await axios.get("http://localhost:5555/api/courses");
         setCourses(response.data.data); // Extract `data` property
         console.log("Courses:", response.data.data);
       } catch (error) {
@@ -54,19 +54,19 @@ const App = () => {
       <Routes>
         {isAuthentic ? (
           <>
-            <Route path="/" element={<Dashboard userId={userId} handleLogout={handleLogout} courses={courses} coursename={''} isCourse={false} setIsCourse={setIsCourse} />} />
-            <Route path="/dashboard" element={<Dashboard userId={userId} handleLogout={handleLogout} courses={courses} coursename={''} isCourse={false} setIsCourse={setIsCourse} />} />
+            <Route path="/" element={<Dashboard userId={userId} handleLogout={handleLogout} courses={courses} courseId={''} isCourse={false} setIsCourse={setIsCourse} />} />
+            <Route path="/dashboard" element={<Dashboard userId={userId} handleLogout={handleLogout} courses={courses} courseId={''} isCourse={false} setIsCourse={setIsCourse} />} />
             <Route path="/quiz" element={<QuizApp />} />
             {courses?.map((course) => (
               <Route
                 key={course.courseId}
-                path={`/courses/${course.courseName.replace(" ", "-")}`}
+                path={`/courses/${course.courseId}`}
                 element={
                   <Dashboard
                     userId={userId}
                     handleLogout={handleLogout}
                     courses={courses}
-                    coursename={course.courseName}
+                    courseId={course.courseId}
                     isCourse={true}
                     setIsCourse={setIsCourse}
                   />

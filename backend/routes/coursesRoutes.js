@@ -24,28 +24,43 @@ router.get("/", async (req, res) => {
 
 
 router.get("/recent", async (req, res) => {
-    try{
-        const recentCourses = await Course.find().populate("roadmapId").slice(0,3) ; // Get the top 3
+    try {
+        const recentCourses = await Course.find()
+            .populate("roadmapId")
+            .sort({
+                createdAt: -1
+            }) // Sort by createdAt in descending order
+            .limit(3); // Limit to top 3
+
         res.status(200).json({
             success: true,
             data: recentCourses
         });
-    }
-    catch(err){
-        console.log(err)
+    } catch (err) {
+        console.error("Error fetching recent courses:", err);
+        res.status(500).json({
+            success: false,
+            message: "Server Error",
+            error: err.message
+        });
     }
 });
+
 
 // Route to get a single course by ID
 router.get("/:id", async (req, res) => {
     try {
-        const course = await courses.find((c) => c.name === req.params.name).populate("roadmapId");
+        const course = await Course.findOne({
+            courseId: req.params.id
+        }).populate("roadmapId");
+
         if (!course) {
             return res.status(404).json({
                 success: false,
                 message: "Course not found"
             });
         }
+
         res.status(200).json({
             success: true,
             data: course
@@ -58,6 +73,7 @@ router.get("/:id", async (req, res) => {
         });
     }
 });
+
 
 router.post("/", async (req, res) => {
     try {

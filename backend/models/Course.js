@@ -1,13 +1,26 @@
-const mongoose = require("mongoose");
+const TopicSchema = new mongoose.Schema({
+  topicId: { type: String, required: true },
+  name: { type: String, required: true },
+  isComplete: { type: Boolean, default: false }
+});
 
-const CourseSchema = new mongoose.Schema({
-  courseId: { type: String, required: true },
-  roadmapId: { type: mongoose.Schema.Types.ObjectId, ref: "Roadmap", required: true },
-  courseName: {type: String},
-  category: {type : String},
-  duration: {type : Number},
-  ramaining: {type : Number},
+const ModuleSchema = new mongoose.Schema({
+  moduleId: { type: String, required: true },
+  title: { type: String, required: true },
+  duration: { type: String, required: true },
+  topics: [TopicSchema]
+});
 
-}, { timestamps: true });
+const WeeklySchema = new mongoose.Schema({
+  weekId: { type: Number, required: true },
+  modules: [ModuleSchema]
+});
 
-module.exports = mongoose.model("Course", CourseSchema);
+// Roadmap Schema
+const RoadmapSchema = new mongoose.Schema(
+  {
+    roadmapId: { type: String, required: true },
+    courseId: { type: mongoose.Schema.Types.ObjectId, ref: "Course", required: true },
+    roadmapData: [WeeklySchema]
+  },
+  { timestamps: true }
