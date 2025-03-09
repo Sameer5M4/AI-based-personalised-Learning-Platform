@@ -99,7 +99,7 @@ export default function Middle({ setCurrentPage, setActive }) {
                             <PathCard
                                 key={course.courseId}
                                 name={course.courseName}
-                                completed={75}
+                                completed={course.progress}
                                 active={course.duration}
                                 remaining={course.remaining}
                             />
@@ -118,7 +118,7 @@ export default function Middle({ setCurrentPage, setActive }) {
                                     <th className="px-4 py-2 text-left">Category</th>
                                     <th className="px-4 py-2 text-left">Task</th>
                                     <th className="px-4 py-2 text-left">Progress</th>
-                                    <th className="px-4 py-2 text-left">Active</th>
+                                    <th className="px-4 py-2 text-left">Duration</th>
                                     <th className="px-4 py-2 text-left">Remaining </th>
                                 </tr>
                             </thead>
@@ -127,7 +127,7 @@ export default function Middle({ setCurrentPage, setActive }) {
                                     <tr key={index}>
                                         <td className="border-t px-4 py-2">
                                             <div className="flex items-center">
-                                                <img alt="Course" className="object-cover w-10 h-10 rounded-md mr-4" src="login2.png" />
+                                                <img alt="Course" className="object-cover w-10 h-10 rounded-md mr-4" src="/development.jpg" />
                                                 <div>
                                                     <div className="font-semibold">{course.courseName}</div>
                                                     <div className="text-sm text-gray-600"> </div>

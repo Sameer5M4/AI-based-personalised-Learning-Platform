@@ -88,7 +88,7 @@ export default function LeftSidebar({ userId, active, setActive, currentPage, se
             navigate("/dashboard"); // Navigate when clicking profile
           }}>
           <img
-            src={`http://localhost:5000${profile.image}`}
+            src={`http://localhost:5550${profile.image}`}
             alt="Profile"
             className="cursor-pointer w-10 h-10 rounded-full"
 

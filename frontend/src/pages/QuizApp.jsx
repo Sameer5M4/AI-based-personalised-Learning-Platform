@@ -97,7 +97,7 @@ export default function QuizApp() {
       estimated_hours: estimatedTime
     });
 
-    console.log("Generated Roadmap:", roadmapResponse.data);
+    // console.log("Generated Roadmap:", roadmapResponse.data);
 
     if (!roadmapResponse.data.roadmapData || !Array.isArray(roadmapResponse.data.roadmapData)) {
       console.error("Invalid roadmapData format:", roadmapResponse.data.roadmapData);
@@ -113,17 +113,18 @@ export default function QuizApp() {
       category: "development",
       duration: estimatedTime,
       remaining: estimatedTime,
+      progress: 0,
       roadmapId: roadmapResponse.data.roadmapId,
       roadmapData: roadmapResponse.data.roadmapData,
     });
 
     console.log("Course Added Successfully:", courseResponse.data);
-    alert("Course and Roadmap added successfully!");
+    // alert("Course and Roadmap added successfully!");
 
     // Navigate to the course page after a delay
     setTimeout(() => {
       setLoading(false);
-      navigate(`/courses/${roadmapResponse.data.roadmapId}`);
+      navigate(`/courses/${roadmapResponse.data.courseId}`);
     }, 3000);
 
   } catch (error) {

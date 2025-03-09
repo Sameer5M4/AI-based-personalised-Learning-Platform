@@ -23,14 +23,14 @@ const CircleProgress = styled.circle`
   stroke-linecap: round;
   stroke-dasharray: 314; /* Circumference of circle (2 * π * r) */
   stroke-dashoffset: ${({ progress }) => 314 - (314 * progress) / 100}; /* Dynamic progress */
-  transition: stroke-dashoffset 2s ease-in-out; /* Smooth transition */
+  transition: stroke-dashoffset 1s ease-in-out; /* Smooth transition */
   transform: rotate(-90deg); /* Start from the top */
   transform-origin: center;
 `;
 
 // Styled Percentage Text Inside Circle
 const PercentageText = styled.text`
-  font-size: 24px;
+  font-size: 23px;
   font-weight: bold;
   fill: black;
   text-anchor: middle;
@@ -43,7 +43,7 @@ const CircularProgress = ({ progress }) => {
   useEffect(() => {
     setTimeout(() => {
       setNewProgress(progress); // Animate to the actual progress
-    }, 1000); // Delay for smooth effect
+    }, 100); // Delay for smooth effect
   }, [progress]);
 
   return (
@@ -56,7 +56,7 @@ const CircularProgress = ({ progress }) => {
         <CircleProgress cx="60" cy="60" r="50" progress={newprogress} />
 
         {/* Text inside Circle */}
-        <PercentageText x="60" y="60">{`${progress}%`}</PercentageText>
+        <PercentageText x="60" y="60" className="transform transition-transform duration-1000" >{`${progress}%`}</PercentageText>
       </svg>
     </ProgressContainer>
   );

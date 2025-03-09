@@ -79,7 +79,7 @@ router.post("/", async (req, res) => {
     try {
         console.log("Received Request Body:", req.body);
 
-        const { courseId, courseName, category, duration, remaining,roadmapId, roadmapData } = req.body;
+        const { courseId, courseName, category, duration, remaining, progress, roadmapId, roadmapData } = req.body;
 
         if (!roadmapData || !Array.isArray(roadmapData)) {
             return res.status(400).json({ success: false, message: "Invalid roadmap data format" });
@@ -99,6 +99,7 @@ router.post("/", async (req, res) => {
             category,
             duration,
             remaining,
+            progress,
         });
  
         const savedCourse = await newCourse.save();

@@ -29,7 +29,7 @@ export default function Courses({ setCurrentPage, courses }) {
                   <tr className="" key={course.courseId} onClick={() => { window.location.href = `/courses/${course.courseId}` }}>
                     <td className="cursor-pointer border-t px-4 py-2">
                       <div className="flex items-center">
-                        <img alt="Course" className="object-cover w-10 h-10 rounded-md mr-4" src="login2.png" />
+                        <img alt="Course" className="object-cover w-10 h-10 rounded-md mr-4" src="development.jpg" />
                         <div>
                           <div className="font-semibold">{course.courseName}</div>
                           <div className="text-sm text-gray-600">{}</div>
@@ -41,7 +41,7 @@ export default function Courses({ setCurrentPage, courses }) {
                     <td className="border-t px-4 py-2">
                       <div className="relative pt-1">
                         <div className="overflow-hidden h-2 text-xs flex rounded bg-blue-200">
-                          <div className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-blue-500" style={{ width: `${50}%` }}></div>
+                          <div className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-blue-500" style={{ width: `${course.progress}%` }}></div>
                         </div>
                       </div>
                     </td>

@@ -91,28 +91,28 @@ export default function RightSide({ userId, darkMode, setDarkMode }) {
                 <div className="mt-6">
                     <div className="text-lg font-semibold mb-4">Todays Task</div>
                     <div className="flex items-center mb-4">
-                        <img alt="Task Image" className="object-fit object-cover w-10 h-10 rounded-lg mr-4" height="40" src="login2.png" width="40" />
+                        <img alt="Task Image" className="object-fit object-cover w-10 h-10 rounded-lg mr-4" height="40" src="arts.jpg" width="40" />
                         <div>
                             <div className="font-semibold">Landing Page Design</div>
                             <div className="text-sm text-gray-600">06:00 AM | Web Design</div>
                         </div>
                     </div>
                     <div className="flex items-center mb-4">
-                        <img alt="Task Image" className="object-fit object-cover w-10 h-10 rounded-lg mr-4" height="40" src="login2.png" width="40" />
+                        <img alt="Task Image" className="object-fit object-cover w-10 h-10 rounded-lg mr-4" height="40" src="marketing.jpg" width="40" />
                         <div>
                             <div className="font-semibold">3D Icon Design</div>
                             <div className="text-sm text-gray-600">09:00 AM | 3D Modeling</div>
                         </div>
                     </div>
                     <div className="flex items-center mb-4">
-                        <img alt="Task Image" className="object-fit object-cover w-10 h-10 rounded-lg mr-4" height="40" src="login2.png" width="40" />
+                        <img alt="Task Image" className="object-fit object-cover w-10 h-10 rounded-lg mr-4" height="40" src="development.jpg" width="40" />
                         <div>
                             <div className="font-semibold">Landing Page Design</div>
                             <div className="text-sm text-gray-600">06:00 AM | Web Design</div>
                         </div>
                     </div>
                     <div className="flex items-center">
-                        <img alt="Task Image" className="object-fit object-cover w-10 h-10 rounded-lg mr-4" height="40" src="login2.png" width="40" />
+                        <img alt="Task Image" className="object-fit object-cover w-10 h-10 rounded-lg mr-4" height="40" src="marketing.jpg" width="40" />
                         <div>
                             <div className="font-semibold">3D Icon Design</div>
                             <div className="text-sm text-gray-600">09:00 AM | 3D Modeling</div>

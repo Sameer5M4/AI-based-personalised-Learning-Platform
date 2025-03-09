@@ -1,13 +1,33 @@
 const mongoose = require("mongoose");
 
 const CourseSchema = new mongoose.Schema({
-  courseId: { type: String, required: true },
-  roadmapId: { type: String, ref: "Roadmap", required: true },
-  courseName: {type: String},
-  category: {type : String},
-  duration: {type : Number},
-  remaining: {type : Number},
+  courseId: {
+    type: String,
+    required: true
+  },
+  roadmapId: {
+    type: String,
+    ref: "Roadmap",
+    required: true
+  },
+  courseName: {
+    type: String
+  },
+  category: {
+    type: String
+  },
+  duration: {
+    type: Number
+  },
+  remaining: {
+    type: Number
+  },
+  progress: {
+    type: Number
+  },
 
-}, { timestamps: true });
+}, {
+  timestamps: true
+});
 
 module.exports = mongoose.model("Course", CourseSchema);

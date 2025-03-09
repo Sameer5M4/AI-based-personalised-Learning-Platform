@@ -23,13 +23,13 @@ const App = () => {
       try {
         const response = await axios.get("http://localhost:5550/api/courses");
         setCourses(response.data.data); // Extract `data` property
-        console.log("Courses:", response.data.data);
+        // console.log("Courses:", response.data.data);
       } catch (error) {
         console.error("Error fetching courses:", error);
       }
     };
     fetchCourses();
-  }, []);
+  }, [courses]);
 
 
   const handleLogin = (token, id) => {

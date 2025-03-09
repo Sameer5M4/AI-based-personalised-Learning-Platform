@@ -21,7 +21,7 @@ export default function Profile({ userId }) {
 
   useEffect(() => {
     if (userId) {
-      axios.get(`http://localhost:5000/api/user/${userId}`)
+      axios.get(`http://localhost:5550/api/user/${userId}`)
         .then((res) => {
           const data = res.data;
           setProfile({
@@ -44,7 +44,7 @@ export default function Profile({ userId }) {
   const toggleEdit = async () => {
     if (isEditing) {
       try {
-        await axios.put(`http://localhost:5000/api/user/${userId}`, profile);
+        await axios.put(`http://localhost:5550/api/user/${userId}`, profile);
       } catch (err) {
         console.error("Error updating profile:", err);
       }

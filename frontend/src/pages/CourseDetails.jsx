@@ -3,6 +3,8 @@ import axios from "axios";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa"; // Import icons
 import styled from 'styled-components';
 import CircularProgress from "./CircularProgress";
+import { RiCheckDoubleLine } from "react-icons/ri";
+import { FaExternalLinkAlt } from "react-icons/fa";
 
 const Roadmap = ({ weeks }) => {
   const isLast = weeks.length;
@@ -74,6 +76,9 @@ const CourseDetails = ({ courseId }) => {
   const [expandedWeeks, setExpandedWeeks] = useState({}); // Tracks expanded weeks
   const [expandedModules, setExpandedModules] = useState({}); // Tracks expanded modules
   const [courseStructure, setCourseStructure] = useState([]);
+  const [roadmapId, setRoadmapId] = useState('');
+  const [completedProgress,setCompletedProgress] = useState(0);
+
   useEffect(() => {
     setIsVisible(true);
   }, []);
@@ -83,12 +88,12 @@ const CourseDetails = ({ courseId }) => {
       try {
         const response = await axios.get(`http://localhost:5550/api/courses/${courseId}`);
         setMyCourse(response.data.data);
-        // console.log(response.data.data)
+        setRoadmapId(response.data.data.roadmapId);
         try {
           const res2 = await axios.get(`http://localhost:5550/api/roadmap/${response.data.data.roadmapId}`);
           // console.log(res2.data.roadmap.roadmapData)
           setCourseStructure(() => res2.data.roadmap.roadmapData);
-          
+
         } catch (error) {
           console.error("Error fetching Roadmap details:", error);
         }
@@ -99,9 +104,20 @@ const CourseDetails = ({ courseId }) => {
     fetchCourse();
   }, []);
 
-  useEffect(()=>{
-    console.log(courseStructure);
-  },);
+  useEffect(() =>{
+    async function progress(){
+      try {
+        const response = await axios.get(`http://localhost:5550/api/roadmap/${roadmapId}/progress`);
+        setCompletedProgress(response.data.progress);
+      }
+      catch(err){
+        console.log(err);
+      }
+      
+    }
+    progress();
+    
+  },[roadmapId,courseStructure])
 
   if (!mycourse) return <p></p>;
 
@@ -114,6 +130,35 @@ const CourseDetails = ({ courseId }) => {
   const toggleModule = (module) => {
     setExpandedModules((prev) => ({ ...prev, [module]: !prev[module] }));
   };
+
+  const toggleCompletion = async (weekIndex, moduleIndex, topicIndex, topic) => {
+    try {
+      const url = `http://localhost:5550/api/roadmap/${roadmapId}/week/${weekIndex}/module/${moduleIndex}/topic/${topicIndex}`;
+      // console.log(`Calling API: ${url}`);
+
+      const response = await axios.put(url, { isComplete: topic.isComplete });
+
+      if (response.status === 200) {
+        // ✅ Update UI after API success
+        setCourseStructure(response.data.course);
+      }
+    } catch (err) {
+      console.error("Error updating topic:", err);
+      alert(err.response?.data?.error || "Failed to update topic");
+    }
+  };
+  const handleURL = async (topicName) => {
+    try {
+      const url = `http://127.0.0.1:5000/article/${topicName.replaceAll(' ','%20')}`;
+      const response = await axios.get(url);
+      console.log(response);
+      window.open(response.data["article_link"],"_blank")
+
+    } catch (err) {
+      console.error("Error Retrieving topic:", err);
+      alert(err.response?.data?.error || "Failed to Retrieve topic");
+    }
+  }
 
   return (
     <>
@@ -128,13 +173,13 @@ const CourseDetails = ({ courseId }) => {
                 <div className="">
                   <h2 className="text-3xl font-bold text-gray-800">{mycourse.courseName}</h2>
                   {/* <p className="text-gray-600">{course.description}</p> */}
-                  <p className="text-gray-700 font-semibold mt-4">✅ Completed: {45}%</p>
+                  <p className="text-gray-700 font-semibold mt-4">✅ Completed: {completedProgress}%</p>
                   <p className="text-gray-700 mt-1">
                     📅 Active Hours: {mycourse.duration} | ⏳ Remaining Hours: {mycourse.remaining}
                   </p>
                 </div>
                 <div className="">
-                  <CircularProgress progress={75} />
+                  <CircularProgress progress={completedProgress} />
                 </div>
               </div>
               <div className="ml-32">
@@ -166,7 +211,7 @@ const CourseDetails = ({ courseId }) => {
                               className="p-2 bg-blue-100 cursor-pointer flex justify-between items-center rounded-md"
                               onClick={() => toggleModule(module.title)}
                             >
-                              <p className="font-semibold text-gray-800">{module.title}</p>
+                              <p className="font-semibold text-gray-800">Module {modIndex + 1}: {module.title}</p>
                               {expandedModules?.[module.title] ? <FaChevronUp /> : <FaChevronDown />}
                             </div>
 
@@ -175,7 +220,7 @@ const CourseDetails = ({ courseId }) => {
                               <div className="ml-6 mt-2 p-3 bg-blue-50 rounded-md">
                                 <ul className="ml-4 text-gray-600">
                                   {module.topics?.map((topic, topicIndex) => (
-                                    <li key={topicIndex}>🔹 {topic.name}</li>
+                                    <li className="flex items-center mr-2 hover:text-indigo-600  cursor-pointer " key={topicIndex}>🔹 <span className="group flex items-center cursor-pointer" onClick={() => handleURL(topic.name)}>{topic.name}  <span className="group-hover:block hidden ml-3"> <FaExternalLinkAlt  size={"10px"}/></span> </span>  <span className="ml-auto mr-3"> <RiCheckDoubleLine size={"19px"} onClick={() => toggleCompletion(index, modIndex, topicIndex, topic)} className={`cursor-pointer ${topic.isComplete ? "text-green-500" : "text-gray-400"}`} /></span> </li>
                                   ))}
                                 </ul>
                                 <p className="text-green-600 mt-2">📝 Assessment </p>

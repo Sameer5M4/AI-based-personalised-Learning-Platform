@@ -33,8 +33,8 @@ const PathCard = ({ name, completed, active, remaining }) => {
                   <span className="info-label">COMPLETED</span>
                 </div>
                 <div className="info-item">
-                  <span className="info-value">{active}</span>
-                  <span className="info-label">DAYS ACTIVE</span>
+                  <span className="info-value">{0}</span>
+                  <span className="info-label"> ACTIVE</span>
                 </div>
                 <div className="info-item">
                   <span className="info-value">{remaining}</span>
@@ -88,7 +88,7 @@ const StyledWrapper = styled.div`
   }
 
   .status-text {
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 500;
     color: #333333;
     letter-spacing: 1px;

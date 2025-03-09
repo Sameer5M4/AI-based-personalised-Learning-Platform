@@ -19,7 +19,7 @@ export default function AuthContainer({ setIsAuthentic, handleLogin, setUserId }
 
   const handleSubmitSignup = async () => {
     try {
-      const res = await axios.post("http://localhost:5000/api/auth/register", formData);
+      const res = await axios.post("http://localhost:5550/api/auth/register", formData);
 
       // Store token and userId
       localStorage.setItem("token", res.data.token);
@@ -48,7 +48,7 @@ export default function AuthContainer({ setIsAuthentic, handleLogin, setUserId }
         alert('Please fill the required fields!');
         return;
       }
-      const res = await axios.post("http://localhost:5000/api/auth/login", loginData);
+      const res = await axios.post("http://localhost:5550/api/auth/login", loginData);
 
       // Store token and user ID
       localStorage.setItem("token", res.data.token);
