@@ -6,7 +6,7 @@ const CourseSchema = new mongoose.Schema({
   courseName: {type: String},
   category: {type : String},
   duration: {type : Number},
-  ramaining: {type : Number},
+  remaining: {type : Number},
 
 }, { timestamps: true });
 

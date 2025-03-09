@@ -47,11 +47,11 @@ router.get("/recent", async (req, res) => {
 
 
 // Route to get a single course by ID
-router.get("/:id", async (req, res) => {
+router.get("/:courseId", async (req, res) => {
     try {
         const course = await Course.findOne({
-            courseId: req.params.id
-        }).populate('roadmapId') ; 
+            courseId: req.params.courseId
+        }); 
 
         if (!course) {
             return res.status(404).json({

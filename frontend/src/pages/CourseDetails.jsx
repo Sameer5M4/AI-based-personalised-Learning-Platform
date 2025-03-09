@@ -69,395 +69,42 @@ const Roadmap = ({ weeks }) => {
 
 
 const CourseDetails = ({ courseId }) => {
-  const [course, setCourse] = useState(null);
+  const [mycourse, setMyCourse] = useState(null);
   const [isVisible, setIsVisible] = useState(false);
   const [expandedWeeks, setExpandedWeeks] = useState({}); // Tracks expanded weeks
   const [expandedModules, setExpandedModules] = useState({}); // Tracks expanded modules
-  const [courseStructure, setCourseStructure] = useState({});
+  const [courseStructure, setCourseStructure] = useState([]);
   useEffect(() => {
     setIsVisible(true);
   }, []);
 
-  // useEffect(() => {
-  //   const fetchCourse = async () => {
-  //     try {
-  //       const response = await axios.get(`http://localhost:5550/api/courses/${courseId}`);
-  //       setCourse(response.data.data);
-  //       setCourseStructure(response.data.data)
-  //       console.log(response.data.data);
-  //       try{
-  //         const res2 = await axios.get(`http://localhost:5550/api/roadmap/${courseId}`);
-  //         console.log(res2.data.data)
-  //       }catch (error) {
-  //         console.error("Error fetching Roadmap details:", error);
-  //       }
-  //     } catch (error) {
-  //       console.error("Error fetching course details:", error);
-  //     }
-  //   };
-  //   fetchCourse();
-  // }, [courseId]);
-  const [roadmap, setRoadmap] = useState(null);
-  // const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   useEffect(() => {
-    const fetchRoadmap = async () => {
+    const fetchCourse = async () => {
       try {
-        const response = await axios.get(`http://localhost:5550/api/roadmap/${`ai_ml_roadmap_001`}`);
-        setRoadmap(response.data.roadmap);
-        console.log(response.data.roadmap)
-
-      } catch (err) {
-        setError(err.response?.data?.message || "Error fetching roadmap");
-
+        const response = await axios.get(`http://localhost:5550/api/courses/${courseId}`);
+        setMyCourse(response.data.data);
+        // console.log(response.data.data)
+        try {
+          const res2 = await axios.get(`http://localhost:5550/api/roadmap/${response.data.data.roadmapId}`);
+          // console.log(res2.data.roadmap.roadmapData)
+          setCourseStructure(() => res2.data.roadmap.roadmapData);
+          
+        } catch (error) {
+          console.error("Error fetching Roadmap details:", error);
+        }
+      } catch (error) {
+        console.error("Error fetching course details:", error);
       }
     };
-
-    fetchRoadmap();
+    fetchCourse();
   }, []);
 
+  useEffect(()=>{
+    console.log(courseStructure);
+  },);
 
-  if (!course) return <p></p>;
+  if (!mycourse) return <p></p>;
 
-  // const courseStructure = [
-  //   {
-  //     week: "1",
-  //     modules: [
-  //       {
-  //         moduleId: "module 1",
-  //         title: "Module 1: Introduction to Web Development",
-  //         topics: [{
-  //           name: "HTML Basics",
-  //           topicId: "topic1",
-  //           isCompleted: false
-  //         },
-  //         {
-  //           name: "CSS Fundamentals",
-  //           topicId: "topic2",
-  //           isCompleted: false
-  //         },
-  //         {
-  //           name: "JavaScript",
-  //           topicId: "topic3",
-  //           isCompleted: false
-  //         }
-  //         ],
-  //         quiz: "Module 1 Quiz",
-  //       },
-  //       {
-  //         moduleId: "module 2",
-  //         title: "Module 2: Frontend Frameworks",
-  //         topics: [{
-  //           name: "React Basics",
-  //           topicId: "topic1",
-  //           isCompleted: false
-  //         },
-  //         {
-  //           name: "Component Structure",
-  //           topicId: "topic2",
-  //           isCompleted: false
-  //         },
-  //         {
-  //           name: "State Management",
-  //           topicId: "topic3",
-  //           isCompleted: false
-  //         }
-  //         ],
-  //         quiz: "Module 2 Quiz",
-  //       },
-  //     ],
-  //   },
-
-  //   {
-  //     week: "2",
-  //     modules: [
-  //       {
-  //         moduleId: "module 3",
-  //         title: "Module 3: Introduction to Web Development",
-  //         topics: [{
-  //           name: "HTML Basics",
-  //           topicId: "topic1",
-  //           isCompleted: false
-  //         },
-  //         {
-  //           name: "CSS Fundamentals",
-  //           topicId: "topic2",
-  //           isCompleted: false
-  //         },
-  //         {
-  //           name: "JavaScript",
-  //           topicId: "topic3",
-  //           isCompleted: false
-  //         }
-  //         ],
-  //         quiz: "Module 1 Quiz",
-  //       },
-  //       {
-  //         moduleId: "module 2",
-  //         title: "Module 4: Frontend Frameworks",
-  //         topics: [{
-  //           name: "React Basics",
-  //           topicId: "topic1",
-  //           isCompleted: false
-  //         },
-  //         {
-  //           name: "Component Structure",
-  //           topicId: "topic2",
-  //           isCompleted: false
-  //         },
-  //         {
-  //           name: "State Management",
-  //           topicId: "topic3",
-  //           isCompleted: false
-  //         }
-  //         ],
-  //         quiz: "Module 2 Quiz",
-  //       },
-  //     ],
-  //   },
-
-  //   {
-  //     week: "3",
-  //     modules: [
-  //       {
-  //         moduleId: "module 1",
-  //         title: "Module 1: Introduction to Web Development",
-  //         topics: [{
-  //           name: "HTML Basics",
-  //           topicId: "topic1",
-  //           isCompleted: false
-  //         },
-  //         {
-  //           name: "CSS Fundamentals",
-  //           topicId: "topic2",
-  //           isCompleted: false
-  //         },
-  //         {
-  //           name: "JavaScript",
-  //           topicId: "topic3",
-  //           isCompleted: false
-  //         }
-  //         ],
-  //         quiz: "Module 1 Quiz",
-  //       },
-  //       {
-  //         moduleId: "module 2",
-  //         title: "Module 2: Frontend Frameworks",
-  //         topics: [{
-  //           name: "React Basics",
-  //           topicId: "topic1",
-  //           isCompleted: false
-  //         },
-  //         {
-  //           name: "Component Structure",
-  //           topicId: "topic2",
-  //           isCompleted: false
-  //         },
-  //         {
-  //           name: "State Management",
-  //           topicId: "topic3",
-  //           isCompleted: false
-  //         }
-  //         ],
-  //         quiz: "Module 2 Quiz",
-  //       },
-  //     ],
-  //   },
-
-  //   {
-  //     week: "4",
-  //     modules: [
-  //       {
-  //         moduleId: "module 1",
-  //         title: "Module 1: Introduction to Web Development",
-  //         topics: [{
-  //           name: "HTML Basics",
-  //           topicId: "topic1",
-  //           isCompleted: false
-  //         },
-  //         {
-  //           name: "CSS Fundamentals",
-  //           topicId: "topic2",
-  //           isCompleted: false
-  //         },
-  //         {
-  //           name: "JavaScript",
-  //           topicId: "topic3",
-  //           isCompleted: false
-  //         }
-  //         ],
-  //         quiz: "Module 1 Quiz",
-  //       },
-  //       {
-  //         moduleId: "module 2",
-  //         title: "Module 2: Frontend Frameworks",
-  //         topics: [{
-  //           name: "React Basics",
-  //           topicId: "topic1",
-  //           isCompleted: false
-  //         },
-  //         {
-  //           name: "Component Structure",
-  //           topicId: "topic2",
-  //           isCompleted: false
-  //         },
-  //         {
-  //           name: "State Management",
-  //           topicId: "topic3",
-  //           isCompleted: false
-  //         }
-  //         ],
-  //         quiz: "Module 2 Quiz",
-  //       },
-  //     ],
-  //   },
-
-  //   {
-  //     week: "5",
-  //     modules: [
-  //       {
-  //         moduleId: "module 1",
-  //         title: "Module 1: Introduction to Web Development",
-  //         topics: [{
-  //           name: "HTML Basics",
-  //           topicId: "topic1",
-  //           isCompleted: false
-  //         },
-  //         {
-  //           name: "CSS Fundamentals",
-  //           topicId: "topic2",
-  //           isCompleted: false
-  //         },
-  //         {
-  //           name: "JavaScript",
-  //           topicId: "topic3",
-  //           isCompleted: false
-  //         }
-  //         ],
-  //         quiz: "Module 1 Quiz",
-  //       },
-  //       {
-  //         moduleId: "module 2",
-  //         title: "Module 2: Frontend Frameworks",
-  //         topics: [{
-  //           name: "React Basics",
-  //           topicId: "topic1",
-  //           isCompleted: false
-  //         },
-  //         {
-  //           name: "Component Structure",
-  //           topicId: "topic2",
-  //           isCompleted: false
-  //         },
-  //         {
-  //           name: "State Management",
-  //           topicId: "topic3",
-  //           isCompleted: false
-  //         }
-  //         ],
-  //         quiz: "Module 2 Quiz",
-  //       },
-  //     ],
-  //   },
-
-  //   {
-  //     week: "6",
-  //     modules: [
-  //       {
-  //         moduleId: "module 1",
-  //         title: "Module 1: Introduction to Web Development",
-  //         topics: [{
-  //           name: "HTML Basics",
-  //           topicId: "topic1",
-  //           isCompleted: false
-  //         },
-  //         {
-  //           name: "CSS Fundamentals",
-  //           topicId: "topic2",
-  //           isCompleted: false
-  //         },
-  //         {
-  //           name: "JavaScript",
-  //           topicId: "topic3",
-  //           isCompleted: false
-  //         }
-  //         ],
-  //         quiz: "Module 1 Quiz",
-  //       },
-  //       {
-  //         moduleId: "module 2",
-  //         title: "Module 2: Frontend Frameworks",
-  //         topics: [{
-  //           name: "React Basics",
-  //           topicId: "topic1",
-  //           isCompleted: false
-  //         },
-  //         {
-  //           name: "Component Structure",
-  //           topicId: "topic2",
-  //           isCompleted: false
-  //         },
-  //         {
-  //           name: "State Management",
-  //           topicId: "topic3",
-  //           isCompleted: false
-  //         }
-  //         ],
-  //         quiz: "Module 2 Quiz",
-  //       },
-  //     ],
-  //   },
-
-  //   {
-  //     week: "7",
-  //     modules: [
-  //       {
-  //         moduleId: "module 1",
-  //         title: "Module 1: Introduction to Web Development",
-  //         topics: [{
-  //           name: "HTML Basics",
-  //           topicId: "topic1",
-  //           isCompleted: false
-  //         },
-  //         {
-  //           name: "CSS Fundamentals",
-  //           topicId: "topic2",
-  //           isCompleted: false
-  //         },
-  //         {
-  //           name: "JavaScript",
-  //           topicId: "topic3",
-  //           isCompleted: false
-  //         }
-  //         ],
-  //         quiz: "Module 1 Quiz",
-  //       },
-  //       {
-  //         moduleId: "module 2",
-  //         title: "Module 2: Frontend Frameworks",
-  //         topics: [{
-  //           name: "React Basics",
-  //           topicId: "topic1",
-  //           isCompleted: false
-  //         },
-  //         {
-  //           name: "Component Structure",
-  //           topicId: "topic2",
-  //           isCompleted: false
-  //         },
-  //         {
-  //           name: "State Management",
-  //           topicId: "topic3",
-  //           isCompleted: false
-  //         }
-  //         ],
-  //         quiz: "Module 2 Quiz",
-  //       },
-  //     ],
-  //   },
-
-
-  // ];
   // Toggle week visibility
   const toggleWeek = (week) => {
     setExpandedWeeks((prev) => ({ ...prev, [week]: !prev[week] }));
@@ -476,14 +123,14 @@ const CourseDetails = ({ courseId }) => {
       >
         <div className="p-8 bg-white/50 rounded-lg h-auto shadow-lg w-full mx-auto border border-gray-200">
           <div className="flex gap-4 m-auto gap-4 w-full">
-            <div className="flex flex-col items-center m-auto gap-10 w-1/2">
+            <div className="flex flex-col items-center mt-6 gap-10 w-1/2">
               <div className="flex gap-10 items-center">
                 <div className="">
-                  <h2 className="text-3xl font-bold text-gray-800">{course.courseName}</h2>
+                  <h2 className="text-3xl font-bold text-gray-800">{mycourse.courseName}</h2>
                   {/* <p className="text-gray-600">{course.description}</p> */}
                   <p className="text-gray-700 font-semibold mt-4">✅ Completed: {45}%</p>
                   <p className="text-gray-700 mt-1">
-                    📅 Active Hours: {course.duration} | ⏳ Remaining Hours: {course.remaining}
+                    📅 Active Hours: {mycourse.duration} | ⏳ Remaining Hours: {mycourse.remaining}
                   </p>
                 </div>
                 <div className="">
@@ -491,55 +138,56 @@ const CourseDetails = ({ courseId }) => {
                 </div>
               </div>
               <div className="ml-32">
-                {/* <Roadmap weeks={courseStructure.map((week, index) => index + 1)} /> */}
+                <Roadmap weeks={courseStructure.map((week, index) => index + 1)} />
 
               </div>
             </div>
             <div className="w-1/2 top-0 p-4 bg-white rounded-xl overflow-hidden shadow-md ">
               <h3 className="text-xl font-semibold mb-3">📅 Weekly Breakdown</h3>
-              {courseStructure.map((week, index) => (
-
-                <div key={index} className="mb-4 overflow-hidden rounded-lg">
-                  {/* Week Header */}
-                  <div
-                    className="p-3 bg-gray-100 cursor-pointer flex justify-between items-center"
-                    onClick={() => toggleWeek(week[`Week ${index + 1}`])}
-                  >
-                    <p className="text-lg font-bold text-purple-600">Week {index + 1}</p>
-                    {expandedWeeks[week[`Week ${index + 1}`]] ? <FaChevronUp /> : <FaChevronDown />}
-                  </div>
-
-                  {/* Modules (Visible only if week is expanded) */}
-                  {expandedWeeks[week[`Week ${index + 1}`]] && (
-                    <div className="p-3 bg-gray-50">
-                      {week[`Week ${index + 1}`].map((module, modIndex) => (
-                        <div key={modIndex} className="mb-3">
-                          {/* Module Header */}
-                          <div
-                            className="p-2 bg-blue-100 cursor-pointer flex justify-between items-center rounded-md"
-                            onClick={() => toggleModule(module.title)}
-                          >
-                            <p className="font-semibold text-gray-800">{module.title}</p>
-                            {expandedModules[module.title] ? <FaChevronUp /> : <FaChevronDown />}
-                          </div>
-
-                          {/* Topics (Visible only if module is expanded) */}
-                          {expandedModules[module.title] && (
-                            <div className="ml-6 mt-2 p-3 bg-blue-50 rounded-md">
-                              <ul className=" ml-4 text-gray-600">
-                                {module.topics.map((topic, topicIndex) => (
-                                  <li key={topicIndex}>🔹 {topic.name}</li>
-                                ))}
-                              </ul>
-                              <p className="text-green-600 mt-2">📝 {module.duration}</p>
-                            </div>
-                          )}
-                        </div>
-                      ))}
+              {courseStructure?.length > 0 &&
+                courseStructure.map((course, index) => (
+                  <div key={index} className="mb-4 overflow-hidden rounded-lg">
+                    {/* Week Header */}
+                    <div
+                      className="p-3 bg-gray-100 cursor-pointer flex justify-between items-center"
+                      onClick={() => toggleWeek(course.week)}
+                    >
+                      <p className="text-lg font-bold text-purple-600">Week {course.week}</p>
+                      {expandedWeeks?.[course.week] ? <FaChevronUp /> : <FaChevronDown />}
                     </div>
-                  )}
-                </div>
-              ))}
+
+                    {/* Modules (Visible only if week is expanded) */}
+                    {expandedWeeks?.[course.week] && (
+                      <div className="p-3 bg-gray-50">
+                        {course.modules?.map((module, modIndex) => (
+                          <div key={modIndex} className="mb-3">
+                            {/* Module Header */}
+                            <div
+                              className="p-2 bg-blue-100 cursor-pointer flex justify-between items-center rounded-md"
+                              onClick={() => toggleModule(module.title)}
+                            >
+                              <p className="font-semibold text-gray-800">{module.title}</p>
+                              {expandedModules?.[module.title] ? <FaChevronUp /> : <FaChevronDown />}
+                            </div>
+
+                            {/* Topics (Visible only if module is expanded) */}
+                            {expandedModules?.[module.title] && (
+                              <div className="ml-6 mt-2 p-3 bg-blue-50 rounded-md">
+                                <ul className="ml-4 text-gray-600">
+                                  {module.topics?.map((topic, topicIndex) => (
+                                    <li key={topicIndex}>🔹 {topic.name}</li>
+                                  ))}
+                                </ul>
+                                <p className="text-green-600 mt-2">📝 Assessment </p>
+                              </div>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                ))}
+
             </div>
 
 

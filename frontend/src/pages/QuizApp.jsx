@@ -123,7 +123,7 @@ export default function QuizApp() {
     // Navigate to the course page after a delay
     setTimeout(() => {
       setLoading(false);
-      navigate(`/courses`);
+      navigate(`/courses/${roadmapResponse.data.roadmapId}`);
     }, 3000);
 
   } catch (error) {
